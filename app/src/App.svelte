@@ -13,7 +13,7 @@
   });
 
   export const connect = () => {
-    const socket = new WebSocket("ws://localhost:8000");
+    const socket = new WebSocket("ws://192.168.1.74:8000"); // TODO: Change this to the IP of the computer running the server
 
     socket.addEventListener("message", async (message: any) => {
       const data: IncomingMessage = JSON.parse(message.data);

@@ -12,9 +12,13 @@ class HttpServer:
         self.server_thread = threading.Thread(target=self.run_server)
         self.server_thread.daemon = True
         self.server_socket = None
+        self.running = False
 
     def start(self):
         if self.server_socket is None:
+            self.running = True
+            self.server_thread = threading.Thread(target=self.run_server)
+            self.server_thread.daemon = True
             self.server_thread.start()
 
     def run_server(self):
@@ -22,21 +26,18 @@ class HttpServer:
         self.server_socket.bind((self.host, self.port))
         self.server_socket.listen(1)
 
-        while True:
-            client_socket, addr = self.server_socket.accept()
-            print(
-                f"Connection from {addr}"
-            )  # Use log message or appropriate logging in practice
-            request = client_socket.recv(1024)
-
-            if not request:
-                break
-
-            # Basic parsing of the request to get the requested path
-            request_line = request.decode("utf-8").splitlines()[0]
-            requested_file = self.parse_request(request_line)
-
+        while self.running:
             try:
+                client_socket, addr = self.server_socket.accept()
+                request = client_socket.recv(1024)
+
+                if not request:
+                    break
+
+                # Basic parsing of the request to get the requested path
+                request_line = request.decode("utf-8").splitlines()[0]
+                requested_file = self.parse_request(request_line)
+
                 if requested_file == "/":
                     requested_file = "/index.html"  # Default to index file
 
@@ -67,8 +68,10 @@ class HttpServer:
                     b"HTTP/1.1 404 NOT FOUND\r\n\r\n<h1>404 Not Found</h1>"
                 )
                 client_socket.sendall(not_found_response)
+            finally:
+                client_socket.close()
 
-            client_socket.close()
+        self.server_socket.close()
 
     def parse_request(self, request_line):
         try:
@@ -78,5 +81,8 @@ class HttpServer:
             return "/"
 
     def stop(self):
+        self.running = False
         if self.server_socket:
             self.server_socket.close()
+        if self.server_thread:
+            self.server_thread.join()
