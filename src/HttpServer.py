@@ -2,11 +2,10 @@ from __future__ import with_statement
 import socket
 import threading
 import os
-from _Framework.ControlSurface import ControlSurface
 
 
 class HttpServer:
-    def __init__(self, host="0.0.0.0", port=8081, web_root="public"):
+    def __init__(self, host="0.0.0.0", port=8082, web_root="public"):
         self.host = host
         self.port = port
         self.web_root = web_root
@@ -81,22 +80,3 @@ class HttpServer:
     def stop(self):
         if self.server_socket:
             self.server_socket.close()
-
-
-class LiveRemote(ControlSurface):
-    __module__ = __name__
-    __doc__ = "Simple Starter Script"
-
-    def __init__(self, c_instance):
-        ControlSurface.__init__(self, c_instance)
-        with self.component_guard():
-            self.http_server = HttpServer(
-                web_root="public"
-            )  # Set the web root to your build directory
-            self.http_server.start()
-
-    def disconnect(self):
-        """Clean up on disconnect"""
-        ControlSurface.disconnect(self)
-        self.http_server.stop()
-        return None
