@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { getContext, setContext } from "svelte";
   import { writable } from "svelte/store";
 
   type State = {
@@ -42,7 +41,7 @@
       // If the WebSocket is connected, send a message
       const ws = prevState.ws;
       if (ws && ws.readyState === WebSocket.OPEN) {
-        ws.send("hello ableton"); // Send the formatted message
+        ws.send("hello ableton");
       }
       return prevState;
     });
