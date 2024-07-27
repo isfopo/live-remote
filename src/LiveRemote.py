@@ -17,13 +17,13 @@ class LiveRemote(ControlSurface):
 
     def _start_websocket_server(self):
         self.websocket_server = WebsocketServer(self)
-        self.handler = Handler(self, server=self.server)
+        self.handler = Handler(self, server=self.websocket_server)
 
-        self.server.on_connect = self.handler.on_connection
-        self.server.on_message = self.handler.on_message
-        self.server.on_disconnect = self.handler.on_disconnect
+        self.websocket_server.on_connect = self.handler.on_connection
+        self.websocket_server.on_message = self.handler.on_message
+        self.websocket_server.on_disconnect = self.handler.on_disconnect
 
-        self.server.start()
+        self.websocket_server.start()
 
     def _start_http_server(self):
         self.http_server = HttpServer()

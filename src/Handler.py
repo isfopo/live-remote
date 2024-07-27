@@ -1,5 +1,5 @@
 import json
-from typing import List
+from typing import List, Union
 
 from _Framework.ControlSurface import ControlSurface
 
@@ -68,7 +68,7 @@ class Handler:
             "Client({client}) disconnected".format(client=client_id)
         )
 
-    def on_message(self, client_id: int, payload: str):
+    def on_message(self, client_id: int, payload: Union[bytearray, bytes, None]):
         message = IncomingMessage(client_id, payload)
 
         self.control_surface.log_message(
