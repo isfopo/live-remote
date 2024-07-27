@@ -6,7 +6,7 @@ from _Framework.ControlSurface import ControlSurface
 
 
 class HttpServer:
-    def __init__(self, host="0.0.0.0", port=8080, web_root="public"):
+    def __init__(self, host="0.0.0.0", port=8081, web_root="public"):
         self.host = host
         self.port = port
         self.web_root = web_root
