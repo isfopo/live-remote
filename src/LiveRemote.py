@@ -5,7 +5,7 @@ from .HttpServer import HttpServer
 
 class LiveRemote(ControlSurface):
     __module__ = __name__
-    __doc__ = "Simple Starter Script"
+    __doc__ = "Live Remote"
 
     def __init__(self, c_instance):
         ControlSurface.__init__(self, c_instance)
