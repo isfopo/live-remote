@@ -50,8 +50,11 @@
 
 <main>
   <h1>Hello, this is Live Remote!</h1>
-  <button on:click={connect}>Connect</button>
-  <button on:click={send}>Send</button>
+  {#if $state.ws && $state.ws.readyState === WebSocket.OPEN}
+    <button on:click={send}>Send</button>
+  {:else}
+    <button on:click={connect}>Connect</button>
+  {/if}
   {#each $state.requests as request}
     <p>{request.url}</p>
   {/each}
