@@ -49,14 +49,20 @@ class HttpServer:
                 )
 
                 with open(file_path, "rb") as f:
+                    file_extension = os.path.splitext(file_path)[1]
+                    content_type = (
+                        "text/html" if file_extension == ".html" else "text/css"
+                    )
+
                     html_response = f.read()
                     response_header = "HTTP/1.1 200 OK\r\n"
-                    response_header += "Content-Type: text/html\r\n"
+                    response_header += f"Content-Type: {content_type}\r\n"
                     response_header += f"Content-Length: {len(html_response)}\r\n"
                     response_header += "Connection: closed\r\n\r\n"
                     client_socket.sendall(
                         response_header.encode("utf-8") + html_response
                     )
+
             except FileNotFoundError:
                 not_found_response = (
                     b"HTTP/1.1 404 NOT FOUND\r\n\r\n<h1>404 Not Found</h1>"
