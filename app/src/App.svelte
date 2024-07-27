@@ -1,13 +1,38 @@
 <script lang="ts">
-  export let name: string;
+  import { writable } from "svelte/store";
+
+  type State = {
+    requests: Array<Request>;
+  };
+
+  // Create a new store with the given data.
+  export const state = writable<State>({
+    requests: [],
+  });
+
+  export const connect = () => {
+    // Create a new websocket
+    const ws = new WebSocket("ws://localhost:8000");
+
+    ws.addEventListener("message", (message: any) => {
+      // Parse the incoming message here
+      const data: Request = JSON.parse(message.data);
+      // Update the state.  That's literally it.  This can happen from anywhere:
+      // we're not in a component, and there's no nested context.
+      state.update((state) => ({
+        ...state,
+        requests: [data].concat(state.requests),
+      }));
+    });
+  };
 </script>
 
 <main>
-  <h1>Hello {name}, this is Live Remote!</h1>
-  <p>
-    Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn
-    how to build Svelte apps.
-  </p>
+  <h1>Hello, this is Live Remote!</h1>
+  <button on:click={connect}>Connect</button>
+  {#each $state.requests as request}
+    <p></p>
+  {/each}
 </main>
 
 <style>
