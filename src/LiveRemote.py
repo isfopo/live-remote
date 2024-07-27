@@ -1,6 +1,8 @@
 from __future__ import with_statement
 from _Framework.ControlSurface import ControlSurface
+from .Handler import Handler
 from .HttpServer import HttpServer
+from .WebsocketServer import WebsocketServer
 
 
 class LiveRemote(ControlSurface):
@@ -10,8 +12,22 @@ class LiveRemote(ControlSurface):
     def __init__(self, c_instance):
         ControlSurface.__init__(self, c_instance)
         with self.component_guard():
-            self.http_server = HttpServer()
-            self.http_server.start()
+            self._start_websocket_server()
+            self._start_http_server()
+
+    def _start_websocket_server(self):
+        self.websocket_server = WebsocketServer(self)
+        self.handler = Handler(self, server=self.server)
+
+        self.server.on_connect = self.handler.on_connection
+        self.server.on_message = self.handler.on_message
+        self.server.on_disconnect = self.handler.on_disconnect
+
+        self.server.start()
+
+    def _start_http_server(self):
+        self.http_server = HttpServer()
+        self.http_server.start()
 
     def disconnect(self):
         """Clean up on disconnect"""
