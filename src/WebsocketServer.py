@@ -1,5 +1,3 @@
-import base64
-import hashlib
 import json
 import socket
 import struct
@@ -52,16 +50,6 @@ class WebsocketServer(threading.Thread):
             client_thread.start()
 
     def handle_client(self, conn: socket.socket, addr):
-        data = conn.recv(1024)
-        headers = self.parse_headers(data)
-
-        # Perform WebSocket handshake
-        key = headers["Sec-WebSocket-Key"]
-        resp_key = self.calculate_response_key(key)
-        handshake_response = self.create_handshake_response(resp_key)
-
-        conn.sendall(handshake_response.encode())
-
         client_id = self.assign_client_id_and_connect(conn)
 
         try:
@@ -143,19 +131,6 @@ class WebsocketServer(threading.Thread):
             headers[key.decode()] = value.decode()
 
         return headers
-
-    def calculate_response_key(self, key):
-        GUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
-        hash = hashlib.sha1((key + GUID).encode()).digest()
-        return base64.b64encode(hash).decode()
-
-    def create_handshake_response(self, key):
-        return (
-            "HTTP/1.1 101 Switching Protocols\r\n"
-            "Upgrade: websocket\r\n"
-            "Connection: Upgrade\r\n"
-            "Sec-WebSocket-Accept: {}\r\n\r\n"
-        ).format(key)
 
     def parse_payload_to_object(self, payload_data: Union[bytearray, bytes]):
         try:
