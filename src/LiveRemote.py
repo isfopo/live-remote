@@ -11,9 +11,13 @@ class LiveRemote(ControlSurface):
 
     def __init__(self, c_instance):
         ControlSurface.__init__(self, c_instance)
-        with self.component_guard():
-            self._start_websocket_server()
-            self._start_http_server()
+        try:
+            with self.component_guard():
+                self._start_websocket_server()
+                self._start_http_server()
+        except Exception as e:
+            self.log_message(str(e))
+            self.disconnect()
 
     def _start_websocket_server(self):
         self.websocket_server = WebsocketServer(self)
@@ -33,4 +37,5 @@ class LiveRemote(ControlSurface):
         """Clean up on disconnect"""
         ControlSurface.disconnect(self)
         self.http_server.stop()
+        self.websocket_server.stop()
         return None

@@ -195,7 +195,7 @@ class WebsocketServer(threading.Thread):
 
         return header + payload
 
-    def shutdown(self):
+    def stop(self):
         self._is_running = False
 
         for client_id in self.clients:
