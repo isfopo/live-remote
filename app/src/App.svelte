@@ -4,24 +4,19 @@
 
   type State = {
     messages: Array<IncomingMessage>;
-    socket: WebSocket | null; // Store WebSocket instance
+    socket: WebSocket | null;
   };
 
-  // Create a new store with the given data.
   export const state = writable<State>({
     messages: [],
-    socket: null, // Initialize WebSocket to null
+    socket: null,
   });
 
   export const connect = () => {
-    // Create a new websocket
     const socket = new WebSocket("ws://localhost:8000");
 
     socket.addEventListener("message", async (message: any) => {
-      // Parse the incoming message here
       const data: IncomingMessage = JSON.parse(message.data);
-      // Update the state.  That's literally it.  This can happen from anywhere:
-      // we're not in a component, and there's no nested context.
 
       state.update((state) => ({
         ...state,
@@ -39,8 +34,7 @@
   export const send = (message: OutgoingMessage) => {
     // Get the current state
     state.update((prevState) => {
-      // If the WebSocket is connected, send a message
-      const socket = prevState.socket;
+      const { socket } = prevState;
       if (socket && socket.readyState === WebSocket.OPEN) {
         socket.send(JSON.stringify(message));
       }
