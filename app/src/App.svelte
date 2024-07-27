@@ -1,6 +1,10 @@
 <script lang="ts">
   import { writable } from "svelte/store";
-  import { IncomingMessage, Method, OutgoingMessage } from "./types/Message";
+  import {
+    Method,
+    type IncomingMessage,
+    type OutgoingMessage,
+  } from "./types/Message";
 
   type State = {
     messages: Array<IncomingMessage>;
