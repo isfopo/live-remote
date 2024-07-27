@@ -1,8 +1,8 @@
 install:
-	npm run build && python3 scripts/install.py --name LiveRemote
+	npm run build && python3 runners/install.py --name LiveRemote
 
 watch:
-	python3 scripts/watch.py --version 'Live 12.0.15'
+	python3 runners/watch.py --version 'Live 12.0.15'
 
 close-set:
 	pkill -x Ableton Live 12 Suite
@@ -14,4 +14,4 @@ reload:
 	just install && just close-set && sleep 1 && just open-set
 
 rename:
-	python3 scripts/rename.py
+	python3 runners/rename.py
