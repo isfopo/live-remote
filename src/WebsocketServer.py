@@ -200,3 +200,5 @@ class WebsocketServer(threading.Thread):
 
         for client_id in self.clients:
             self.clients[client_id].close()
+
+        self.sock.close()
