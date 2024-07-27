@@ -29,9 +29,9 @@ class HttpServer:
                 f"Connection from {addr}"
             )  # Use log message or appropriate logging in practice
             request = client_socket.recv(1024)
-            print(
-                f"Request: {request.decode('utf-8')}"
-            )  # Use log message or appropriate logging in practice
+
+            if not request:
+                break
 
             # Basic parsing of the request to get the requested path
             request_line = request.decode("utf-8").splitlines()[0]
