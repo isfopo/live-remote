@@ -13,6 +13,8 @@ from .OutgoingMessage import OutgoingMessage
 from .WebsocketServer import WebsocketServer
 from .Status import Status
 
+VALIDATE_MESSAGES = False
+
 
 class Handler:
     """
@@ -77,11 +79,12 @@ class Handler:
             )
         )
 
-        if getattr(message, "method", None) == Method.AUTH:
+        if VALIDATE_MESSAGES and getattr(message, "method", None) == Method.AUTH:
             self.handleAuth(message, client_id)
 
         elif (
-            hasattr(message, "code")
+            VALIDATE_MESSAGES
+            and hasattr(message, "code")
             and self.client_codes.validate(client_id, message.code) is False
         ):
             self.server.send(
