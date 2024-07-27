@@ -5,7 +5,7 @@ watch:
 	python3 scripts/watch.py --version 'Live 12.0.15'
 
 close-set:
-	pkill -x Ableton Live 11 Suite
+	pkill -x Ableton Live 12 Suite
 
 open-set:
 	open set/oscdevset.als
