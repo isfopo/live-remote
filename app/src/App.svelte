@@ -31,20 +31,20 @@
     });
 
     // Store the WebSocket instance in the state
-    state.update((prevState) => ({
-      ...prevState,
+    state.update((state) => ({
+      ...state,
       socket,
     }));
   };
 
   export const send = (message: OutgoingMessage) => {
     // Get the current state
-    state.update((prevState) => {
-      const { socket } = prevState;
+    state.update((state) => {
+      const { socket } = state;
       if (socket && socket.readyState === WebSocket.OPEN) {
         socket.send(JSON.stringify(message));
       }
-      return prevState;
+      return state;
     });
   };
 </script>
