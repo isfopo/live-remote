@@ -16,8 +16,8 @@
   export const state = writable<State>({
     live: { song: { is_playing: 0, record_mode: 0, tempo: 120 } },
     socket: null,
-    send: (message: OutgoingMessage) => {
-      state.update((state) => {
+    send: (message: OutgoingMessage): void => {
+      state.update((state): State => {
         const { socket } = state;
         if (socket && socket.readyState === WebSocket.OPEN) {
           socket.send(JSON.stringify(message));
@@ -27,7 +27,7 @@
     },
   });
 
-  export const connect = () => {
+  export const connect = (): void => {
     const socket = new WebSocket(
       `ws://${window.serverIp}:${window.serverPort}`
     );
@@ -37,20 +37,24 @@
         message.data
       );
 
-      state.update((state) => ({
-        ...state,
-        live: {
-          ...state.live,
-          [address]: { [prop]: result },
-        },
-      }));
+      state.update(
+        (state): State => ({
+          ...state,
+          live: {
+            ...state.live,
+            [address]: { [prop]: result },
+          },
+        })
+      );
     });
 
     // Store the WebSocket instance in the state
-    state.update((state) => ({
-      ...state,
-      socket,
-    }));
+    state.update(
+      (state): State => ({
+        ...state,
+        socket,
+      })
+    );
   };
 </script>
 
