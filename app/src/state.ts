@@ -14,4 +14,5 @@ export const state = writable<State>({
       return state;
     });
   },
+  error: undefined,
 });

@@ -5,4 +5,5 @@ export type State = {
   socket: WebSocket | null;
   live: Live;
   send: (message: OutgoingMessage) => void;
+  error: string | undefined;
 };
