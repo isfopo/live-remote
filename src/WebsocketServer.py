@@ -7,8 +7,7 @@ import threading
 from typing import Any, Callable, Dict, Union
 
 from _Framework import ControlSurface
-
-PORT = 8000
+from .constants import WEBSOCKET_PORT
 
 
 class WebsocketServer(threading.Thread):
@@ -22,7 +21,7 @@ class WebsocketServer(threading.Thread):
     def __init__(
         self,
         control_surface: ControlSurface.ControlSurface,
-        port=PORT,
+        port=WEBSOCKET_PORT,
         on_connect: Union[Callable[[int], None], None] = None,
         on_message: Union[Callable[[int, Union[Any, None]], None], None] = None,
         on_disconnect: Union[Callable[[int], None], None] = None,

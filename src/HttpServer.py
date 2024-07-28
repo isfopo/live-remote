@@ -3,9 +3,11 @@ import socket
 import threading
 import os
 
+from .constants import HTTP_SERVER_PORT, WEBSOCKET_PORT
+
 
 class HttpServer:
-    def __init__(self, host="0.0.0.0", port=8082, web_root="public"):
+    def __init__(self, host="0.0.0.0", port=HTTP_SERVER_PORT, web_root="public"):
         self.host = host
         self.port = port
         self.web_root = web_root
@@ -54,13 +56,21 @@ class HttpServer:
                         "text/html" if file_extension == ".html" else "text/css"
                     )
 
-                    html_response = f.read()
+                    html_response = f.read().decode("utf-8")
+                    # Get server IP address
+                    server_ip = socket.gethostbyname(socket.gethostname())
+                    # Replace the placeholder in the HTML with the server IP
+                    html_response = html_response.replace("{{SERVER_IP}}", server_ip)
+                    html_response = html_response.replace(
+                        "{{SERVER_PORT}}", str(WEBSOCKET_PORT)
+                    )
                     response_header = "HTTP/1.1 200 OK\r\n"
                     response_header += f"Content-Type: {content_type}\r\n"
                     response_header += f"Content-Length: {len(html_response)}\r\n"
                     response_header += "Connection: closed\r\n\r\n"
+
                     client_socket.sendall(
-                        response_header.encode("utf-8") + html_response
+                        response_header.encode("utf-8") + html_response.encode("utf-8")
                     )
 
             except FileNotFoundError:
