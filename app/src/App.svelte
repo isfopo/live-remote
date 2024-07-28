@@ -17,7 +17,6 @@
     live: { song: { is_playing: 0, record_mode: 0, tempo: 120 } },
     socket: null,
     send: (message: OutgoingMessage) => {
-      // Get the current state
       state.update((state) => {
         const { socket } = state;
         if (socket && socket.readyState === WebSocket.OPEN) {
