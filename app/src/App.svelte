@@ -2,27 +2,15 @@
   import { Method } from "./types/Message";
   import { state } from "./state";
   import Connect from "./views/Connect.svelte";
+  import Remote from "./views/Remote.svelte";
 </script>
 
 <main>
   {#if $state.socket && $state.socket.readyState === WebSocket.OPEN}
-    <button
-      on:click={() =>
-        $state.send({
-          method: Method.SET,
-          address: "song",
-          prop: "is_playing",
-          value: 1,
-          type: "int",
-        })}>Play</button
-    >
+    <Remote />
   {:else}
     <Connect />
   {/if}
-  <p>
-    <strong>Is Playing:</strong>
-    {$state.live.song.is_playing}
-  </p>
 </main>
 
 <style>
