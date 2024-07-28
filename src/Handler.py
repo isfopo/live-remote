@@ -187,9 +187,9 @@ class Handler:
         ):
 
             def callback():
-                result = getattr(self.locate(message.address), message.prop)
+                value = getattr(self.locate(message.address), message.prop)
 
-                if result is not None:
+                if value is not None:
                     try:
                         self.server.send(
                             client_id,
@@ -199,7 +199,7 @@ class Handler:
                                     message.method,
                                     message.address,
                                     message.prop,
-                                    result,
+                                    value,
                                 )
                             ).to_dict(),
                         )
@@ -212,7 +212,7 @@ class Handler:
                                     message.method,
                                     message.address,
                                     message.prop,
-                                    result,
+                                    value,
                                 )
                             ).to_dict(),
                         )
@@ -288,11 +288,11 @@ class Handler:
     def handleCall(self, message: IncomingMessage, client_id: int):
         try:
             if message.value is not None:
-                result = getattr(self.locate(message.address), message.prop)(
+                value = getattr(self.locate(message.address), message.prop)(
                     message.value
                 )
             else:
-                result = getattr(self.locate(message.address), message.prop)()
+                value = getattr(self.locate(message.address), message.prop)()
 
             self.server.send(
                 client_id,
@@ -301,7 +301,7 @@ class Handler:
                     message.method,
                     message.address,
                     message.prop,
-                    result,
+                    value,
                 ).to_dict(),
             )
         except Exception as error:

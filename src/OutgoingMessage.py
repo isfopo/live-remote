@@ -19,7 +19,7 @@ class OutgoingMessage:
                 UNLISTEN: removes lister for given property.
         address (str): location of property or method.
         prop (str): property or method.
-        result (str, int, float, bool, None): product of call
+        value (str, int, float, bool, None): product of call
     """
 
     def __init__(
@@ -28,13 +28,13 @@ class OutgoingMessage:
         method: Method,
         address: str,
         prop: str,
-        result: Union[str, int, float, bool, None] = None,
+        value: Union[str, int, float, bool, None] = None,
     ) -> None:
         self.status = status
         self.method = method
         self.address = address
         self.prop = prop
-        self.result = result
+        self.value = value
 
     def to_dict(self):
         return {
@@ -42,5 +42,5 @@ class OutgoingMessage:
             "method": self.method.value,
             "address": self.address,
             "prop": self.prop,
-            "result": self.result,
+            "value": self.value,
         }
