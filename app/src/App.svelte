@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { Method } from "./types/Message";
   import { state } from "./state";
   import Connect from "./views/Connect.svelte";
   import Remote from "./views/Remote.svelte";
