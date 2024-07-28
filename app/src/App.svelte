@@ -27,7 +27,7 @@
     );
 
     socket.addEventListener("message", async (message) => {
-      const { address, prop, result }: IncomingMessage = JSON.parse(
+      const { address, prop, value }: IncomingMessage = JSON.parse(
         message.data
       );
 
@@ -36,7 +36,7 @@
           ...state,
           live: {
             ...state.live,
-            [address]: { [prop]: result },
+            [address]: { [prop]: value },
           },
         })
       );

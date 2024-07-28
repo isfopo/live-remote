@@ -1,3 +1,5 @@
+import type { Optional } from "./Utility";
+
 export enum Method {
   /** Used to check client code */
   AUTH = "AUTH",
@@ -25,18 +27,16 @@ export interface Message {
   address: string;
   /** property or method */
   prop: string;
+  /** Value of or to set property */
+  value: string | number | boolean | Array<string | number | boolean>;
 }
 
 export interface IncomingMessage extends Message {
   /** status of request */
   status: Status;
-  /** params to be passed to method */
-  result: string | number | boolean | Array<string | number | boolean>;
 }
 
-export interface OutgoingMessage extends Message {
-  /** params to be passed to method */
-  value?: string | number | boolean;
+export interface OutgoingMessage extends Optional<Message, "value"> {
   /** Overrides typeof for python friendly types */
   type?: "int" | "float" | "string" | "boolean";
 }
