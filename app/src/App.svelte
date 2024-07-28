@@ -5,17 +5,11 @@
     type IncomingMessage,
     type OutgoingMessage,
   } from "./types/Message";
-  import type { Live } from "./types/Live";
-
-  type State = {
-    live: Live;
-    socket: WebSocket | null;
-    send: (message: OutgoingMessage) => void;
-  };
+  import type { State } from "./types/State";
 
   export const state = writable<State>({
-    live: { song: { is_playing: 0, record_mode: 0, tempo: 120 } },
     socket: null,
+    live: { song: { is_playing: 0, record_mode: 0, tempo: 120 } },
     send: (message: OutgoingMessage): void => {
       state.update((state): State => {
         const { socket } = state;
