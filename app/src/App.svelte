@@ -10,11 +10,22 @@
   type State = {
     live: Live;
     socket: WebSocket | null;
+    send: (message: OutgoingMessage) => void;
   };
 
   export const state = writable<State>({
     live: { song: { is_playing: 0, record_mode: 0, tempo: 120 } },
     socket: null,
+    send: (message: OutgoingMessage) => {
+      // Get the current state
+      state.update((state) => {
+        const { socket } = state;
+        if (socket && socket.readyState === WebSocket.OPEN) {
+          socket.send(JSON.stringify(message));
+        }
+        return state;
+      });
+    },
   });
 
   export const connect = () => {
@@ -42,17 +53,6 @@
       socket,
     }));
   };
-
-  export const send = (message: OutgoingMessage) => {
-    // Get the current state
-    state.update((state) => {
-      const { socket } = state;
-      if (socket && socket.readyState === WebSocket.OPEN) {
-        socket.send(JSON.stringify(message));
-      }
-      return state;
-    });
-  };
 </script>
 
 <main>
@@ -60,7 +60,7 @@
   {#if $state.socket && $state.socket.readyState === WebSocket.OPEN}
     <button
       on:click={() =>
-        send({
+        $state.send({
           method: Method.SET,
           address: "song",
           prop: "is_playing",
