@@ -5,14 +5,15 @@
     type IncomingMessage,
     type OutgoingMessage,
   } from "./types/Message";
+  import type { Live } from "./types/Live";
 
   type State = {
-    messages: Array<IncomingMessage>;
+    live: Live;
     socket: WebSocket | null;
   };
 
   export const state = writable<State>({
-    messages: [],
+    live: { song: { is_playing: 0, record_mode: 0, tempo: 120 } },
     socket: null,
   });
 
@@ -21,12 +22,17 @@
       `ws://${window.serverIp}:${window.serverPort}`
     );
 
-    socket.addEventListener("message", async (message: any) => {
-      const data: IncomingMessage = JSON.parse(message.data);
+    socket.addEventListener("message", async (message) => {
+      const { address, prop, result }: IncomingMessage = JSON.parse(
+        message.data
+      );
 
       state.update((state) => ({
         ...state,
-        messages: [data].concat(state.messages),
+        live: {
+          ...state.live,
+          [address]: { [prop]: result },
+        },
       }));
     });
 
@@ -65,6 +71,10 @@
   {:else}
     <button on:click={connect}>Connect</button>
   {/if}
+  <p>
+    <strong>Is Playing:</strong>
+    {$state.live.song.is_playing}
+  </p>
 </main>
 
 <style>
