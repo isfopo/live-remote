@@ -40,7 +40,10 @@ export default {
   },
   plugins: [
     svelte({
-      preprocess: sveltePreprocess({ sourceMap: false }),
+      preprocess: sveltePreprocess({
+        sourceMap: false,
+        typescript: { tsconfigFile: "./app/tsconfig.json" },
+      }),
       compilerOptions: {
         // enable run-time checks when not in production
         dev: !production,
