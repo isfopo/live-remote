@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "strict": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "sourceMap": false
   },
   "extends": "@tsconfig/svelte/tsconfig.json",
 
