@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
 import type { State } from "./types/State";
-import type { IncomingMessage, OutgoingMessage } from "./types/Message";
+import type { OutgoingMessage } from "./types/Message";
 
 export const state = writable<State>({
   socket: null,
