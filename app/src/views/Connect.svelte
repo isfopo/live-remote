@@ -21,7 +21,7 @@
             ...state,
             live: {
               ...state.live,
-              [address]: { [prop]: value },
+              [address]: { ...state.live[address], [prop]: value },
             },
           })
         );

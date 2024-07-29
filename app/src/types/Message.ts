@@ -1,3 +1,4 @@
+import type { Live } from "./Live";
 import type { Optional } from "./Utility";
 
 export enum Method {
@@ -24,9 +25,9 @@ export interface Message {
   /** action to take */
   method: Method;
   /** location of property or method */
-  address: string;
+  address: keyof Live;
   /** property or method */
-  prop: string;
+  prop: keyof Live[keyof Live];
   /** Value of or to set property */
   value: string | number | boolean | Array<string | number | boolean>;
 }
