@@ -15,6 +15,9 @@ class LiveRemote(ControlSurface):
             with self.component_guard():
                 self._start_websocket_server()
                 self._start_http_server()
+
+            self.show_message(f"Live Remote is available at {self.http_server.url}")
+
         except Exception as e:
             self.log_message(str(e))
             self.disconnect()

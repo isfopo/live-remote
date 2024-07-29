@@ -11,10 +11,15 @@ class HttpServer:
         self.host = host
         self.port = port
         self.web_root = web_root
+        self.server_ip = socket.gethostbyname(socket.gethostname())
         self.server_thread = threading.Thread(target=self.run_server)
         self.server_thread.daemon = True
         self.server_socket = None
         self.running = False
+
+    @property
+    def url(self):
+        return "http://%s:%s" % (self.server_ip, self.port)
 
     def start(self):
         if self.server_socket is None:
@@ -70,10 +75,10 @@ class HttpServer:
                     # If the content type is text, decode it for replacement
                     if "text" in content_type:
                         file_content = file_content.decode("utf-8")
-                        # Get server IP address
-                        server_ip = socket.gethostbyname(socket.gethostname())
                         # Replace the placeholder in the HTML with the server IP
-                        file_content = file_content.replace("{{SERVER_IP}}", server_ip)
+                        file_content = file_content.replace(
+                            "{{SERVER_IP}}", self.server_ip
+                        )
                         file_content = file_content.replace(
                             "{{SERVER_PORT}}", str(WEBSOCKET_PORT)
                         )
