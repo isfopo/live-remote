@@ -53,24 +53,44 @@ class HttpServer:
                 with open(file_path, "rb") as f:
                     file_extension = os.path.splitext(file_path)[1]
                     content_type = (
-                        "text/html" if file_extension == ".html" else "text/css"
+                        "text/html"
+                        if file_extension == ".html"
+                        else "text/css"
+                        if file_extension == ".css"
+                        else "image/png"
+                        if file_extension == ".png"
+                        else "image/jpeg"
+                        if file_extension in [".jpg", ".jpeg"]
+                        else "application/octet-stream"  # Fallback for binary files
                     )
 
-                    html_response = f.read().decode("utf-8")
-                    # Get server IP address
-                    server_ip = socket.gethostbyname(socket.gethostname())
-                    # Replace the placeholder in the HTML with the server IP
-                    html_response = html_response.replace("{{SERVER_IP}}", server_ip)
-                    html_response = html_response.replace(
-                        "{{SERVER_PORT}}", str(WEBSOCKET_PORT)
-                    )
+                    # Read file content as bytes
+                    file_content = f.read()
+
+                    # If the content type is text, decode it for replacement
+                    if "text" in content_type:
+                        file_content = file_content.decode("utf-8")
+                        # Get server IP address
+                        server_ip = socket.gethostbyname(socket.gethostname())
+                        # Replace the placeholder in the HTML with the server IP
+                        file_content = file_content.replace("{{SERVER_IP}}", server_ip)
+                        file_content = file_content.replace(
+                            "{{SERVER_PORT}}", str(WEBSOCKET_PORT)
+                        )
+                        file_content = file_content.encode("utf-8")
+                    else:
+                        # No need to replace for binary files, just return as-is
+                        pass
+
+                    # Build the HTTP response
                     response_header = "HTTP/1.1 200 OK\r\n"
                     response_header += f"Content-Type: {content_type}\r\n"
-                    response_header += f"Content-Length: {len(html_response)}\r\n"
+                    response_header += f"Content-Length: {len(file_content)}\r\n"
                     response_header += "Connection: closed\r\n\r\n"
 
+                    # Ensure everything is bytes before concatenation
                     client_socket.sendall(
-                        response_header.encode("utf-8") + html_response.encode("utf-8")
+                        response_header.encode("utf-8") + file_content
                     )
 
             except FileNotFoundError:
