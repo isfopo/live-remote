@@ -3,6 +3,23 @@
   import { state } from "../../state";
   import { FaSolidPlay } from "svelte-icons-pack/fa";
   import { Method } from "../../types/Message";
+  import { onMount, onDestroy } from "svelte";
+
+  onMount(() => {
+    $state.send({
+      method: Method.LISTEN,
+      address: "song",
+      prop: "is_playing",
+    });
+  });
+
+  onDestroy(() => {
+    $state.send({
+      method: Method.UNLISTEN,
+      address: "song",
+      prop: "is_playing",
+    });
+  });
 </script>
 
 <IconButton
