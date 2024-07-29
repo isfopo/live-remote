@@ -19,7 +19,7 @@ class HttpServer:
 
     @property
     def url(self):
-        return "http://%s:%s" % (self.server_ip, self.port)
+        return f"http://{self.server_ip}:{self.port}"
 
     def start(self):
         if self.server_socket is None:
