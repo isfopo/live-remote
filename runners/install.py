@@ -43,7 +43,7 @@ parser.add_argument("--name", "-name of output folder", required=False)
 args = parser.parse_args()
 
 currentDir = os.getcwd()
-srcDir = os.path.join(currentDir, "src")
+srcDir = os.path.join(currentDir, "script")
 
 user = args.user or getpass.getuser()
 
