@@ -56,10 +56,12 @@ class HttpServer:
                 )
 
                 with open(file_path, "rb") as f:
-                    file_extension = os.path.splitext(file_path)[1]
+                    file_extension = os.path.splitext(file_path)[-1]
                     content_type = (
                         "text/html"
                         if file_extension == ".html"
+                        else "application/javascript"
+                        if file_extension == ".js"
                         else "text/css"
                         if file_extension == ".css"
                         else "image/png"
