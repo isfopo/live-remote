@@ -37,11 +37,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           version=$(jq -r .version package.json)
-          zip -r "LiveRemote-${version}.zip" ./script
+          mv ./script ./LiveRemote
+          zip -r "LiveRemote-${version}.zip" ./LiveRemote
           gh release create "v${version}" "LiveRemote-${version}.zip" --title "Release ${version}" --notes "This is the release for version ${version}. Check it out!"
-
-      - name: Upload Release Asset
-        uses: actions/upload-artifact@v3
-        with:
-          name: "LiveRemote-${{ steps.create_release.outputs.version }}.zip"
-          path: "LiveRemote-${{ steps.create_release.outputs.version }}.zip"
