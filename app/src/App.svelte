@@ -21,9 +21,11 @@
   main {
     text-align: center;
     background-color: var(--theme-background);
-    padding: 1em;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
     max-width: 240px;
-    margin: 0 auto;
   }
 
   @media (min-width: 640px) {
