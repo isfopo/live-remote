@@ -25,7 +25,6 @@
     height: 100%;
     padding: 0;
     margin: 0;
-    max-width: 240px;
   }
 
   @media (min-width: 640px) {
