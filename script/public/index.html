@@ -5,16 +5,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
 
     <title>Live Remote</title>
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="stylesheet" href="/global.css" />
+    <link rel="stylesheet" href="/build/bundle.css" onload="this.media='all'" />
 
     <script>
       // Store the server IP address and websocket port in the window object
       window.serverIp = "{{SERVER_IP}}";
       window.serverPort = "{{SERVER_PORT}}";
     </script>
-
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="stylesheet" href="/global.css" />
-    <link rel="stylesheet" href="/build/bundle.css" />
 
     <script defer src="/build/bundle.js"></script>
   </head>
