@@ -44,10 +44,10 @@ class WebsocketServer(threading.Thread):
         while True:
             conn, addr = self.sock.accept()
 
-            client_thread = threading.Thread(
+            self.client_thread = threading.Thread(
                 target=self.handle_client, args=(conn, addr)
             )
-            client_thread.start()
+            self.client_thread.start()
 
     def handle_client(self, conn: socket.socket, addr):
         data = conn.recv(1024)
@@ -201,3 +201,6 @@ class WebsocketServer(threading.Thread):
             self.clients[client_id].close()
 
         self.sock.close()
+
+        if self.client_thread is not None:
+            self.client_thread.join()
