@@ -16,14 +16,15 @@ export type State = {
   error: string | undefined;
 };
 
+const initialTheme = (localStorage.getItem("currentTheme") ??
+  (window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light")) as ThemeNames;
+
 export const state = writable<State>({
   socket: null,
   theme: {
-    current:
-      localStorage.getItem("currentTheme") ??
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light",
+    current: initialTheme,
     available: ["dark", "light"],
     set: (theme: ThemeNames): void => {
       setRootColors(theme);
@@ -47,3 +48,5 @@ export const state = writable<State>({
   },
   error: undefined,
 });
+
+setRootColors(initialTheme);
