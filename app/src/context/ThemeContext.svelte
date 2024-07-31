@@ -2,6 +2,17 @@
   import { setContext, onMount } from "svelte";
   import { writable } from "svelte/store";
   import { themes as _themes } from "../theme";
+
+  onMount(() => {
+    const userTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+    const defaultTheme = getCurrentTheme(userTheme) || themes[0]; // Fallback to first theme if not found
+    _current = defaultTheme.name;
+    Theme.set(defaultTheme); // Initialize Theme store with the default theme
+    setRootColors(defaultTheme); // Set CSS vars to the default theme on mount
+  });
+
   // expose props for customization and set default values
   export let themes = [..._themes];
   // set state of current theme's name
