@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import { state } from "../state";
   import type { IncomingMessage } from "../types/Message";
-  import type { State } from "../types/State";
+  import type { State } from "../state";
   import Spinner from "../components/loaders/Spinner.svelte";
 
   const connect = (): void => {

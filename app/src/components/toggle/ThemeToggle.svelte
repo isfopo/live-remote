@@ -1,6 +1,9 @@
-<script>
-  import { getContext } from "svelte";
-  const { theme, toggle } = getContext("theme");
+<script lang="ts">
+  import { state } from "../../state";
 </script>
 
-<button on:click={toggle}>{$theme.name}</button>
+<button
+  on:click={() =>
+    $state.theme.set($state.theme.current === "dark" ? "light" : "dark")}
+  >{$state.theme.current}</button
+>

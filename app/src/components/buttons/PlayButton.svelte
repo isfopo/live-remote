@@ -4,6 +4,7 @@
   import { FaSolidPlay } from "svelte-icons-pack/fa";
   import { Method } from "../../types/Message";
   import { listen } from "../../hooks/listen";
+  import { themes } from "../../theme";
 
   listen("song", "is_playing");
 </script>
@@ -18,5 +19,5 @@
       value: 1,
       type: "int",
     })}
-  color={$state.live.song.is_playing ? "#32cd32" : "#000"}
+  color={$state.live.song.is_playing ? "" : "#000"}
 />
