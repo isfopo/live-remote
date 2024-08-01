@@ -18,7 +18,5 @@
       value: 1,
       type: "int",
     })}
-  color={$state.live.song.is_playing
-    ? $state.theme.get("play")
-    : $state.theme.get("foreground")}
+  color={$state.live.song.is_playing ? "play" : "foreground"}
 />
