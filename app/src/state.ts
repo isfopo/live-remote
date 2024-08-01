@@ -40,8 +40,7 @@ export const state = writable<State>({
       let themeValue: string = "";
 
       state.subscribe((currentState) => {
-        const currentThemeName = currentState.theme.current;
-        const currentThemeColors = themes[currentThemeName];
+        const currentThemeColors = themes[currentState.theme.current];
 
         if (currentThemeColors && color in currentThemeColors) {
           themeValue = currentThemeColors[color];
