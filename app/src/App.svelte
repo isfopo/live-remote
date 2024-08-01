@@ -6,7 +6,9 @@
 </script>
 
 <main>
-  <ThemeToggle />
+  <header>
+    <ThemeToggle />
+  </header>
   {#if $state.socket && $state.socket.readyState === WebSocket.OPEN}
     <Remote />
   {:else}
