@@ -2,7 +2,9 @@
   import Grid, { GridItem } from "svelte-grid-extended";
   import { widgets, type WidgetItems } from "../widgets";
 
-  const items: WidgetItems[] = [{ id: "transport", x: 0, y: 0, w: 2, h: 5 }];
+  const items: WidgetItems[] = [
+    { id: "transport", name: "Transport", x: 0, y: 0, w: 2, h: 5 },
+  ];
 
   const itemSize = { height: 40 };
 </script>

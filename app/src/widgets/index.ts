@@ -1,10 +1,11 @@
 import type { ComponentType } from "svelte";
 import TransportWidget from "../widgets/TransportWidget.svelte";
 
-export type WidgetName = "transport";
+export type WidgetId = "transport";
 
 export interface WidgetItems {
-  id: WidgetName;
+  id: WidgetId;
+  name: string;
   x: number;
   y: number;
   w: number;
