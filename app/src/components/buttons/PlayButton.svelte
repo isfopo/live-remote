@@ -18,5 +18,6 @@
       value: 1,
       type: "int",
     })}
-  color={$state.live.song.is_playing ? "#32cd32" : "#000"}
+  color={$state.live.song.is_playing ? "play" : "foreground"}
+  title="Play"
 />

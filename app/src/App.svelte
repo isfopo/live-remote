@@ -1,20 +1,19 @@
 <script lang="ts">
-  import ThemeToggle from "./components/toggle/ThemeToggle.svelte";
-  import ThemeContext from "./context/ThemeContext.svelte";
+  import ThemeToggle from "./components/buttons/ThemeToggleButton.svelte";
   import { state } from "./state";
   import Connect from "./views/Connect.svelte";
   import Remote from "./views/Remote.svelte";
 </script>
 
 <main>
-  <ThemeContext>
+  <header>
     <ThemeToggle />
-    {#if $state.socket && $state.socket.readyState === WebSocket.OPEN}
-      <Remote />
-    {:else}
-      <Connect />
-    {/if}
-  </ThemeContext>
+  </header>
+  {#if $state.socket && $state.socket.readyState === WebSocket.OPEN}
+    <Remote />
+  {:else}
+    <Connect />
+  {/if}
 </main>
 
 <style>
