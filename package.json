@@ -10,7 +10,7 @@
     "watch": "python3 runners/watch.py --version 'Live 12.0.15'",
     "close-set": "pkill -x Ableton Live 12 Suite",
     "open-set": "open set/set.als",
-    "reload": "npm run load && npm run close-set && sleep 1 && npm run open-set"
+    "reload": "npm run close-set && npm run load && sleep 1 && npm run open-set"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^26.0.1",
