@@ -7,13 +7,14 @@
   export let color: ThemeColors = "foreground";
   let _color: string = $state.theme.get(color);
   export let size: number = 48;
+  export let title: string;
 
   $: {
     _color = $state.theme.get(color);
   }
 </script>
 
-<button on:click={onClick}>
+<button on:click={onClick} {title}>
   <Icon src={icon} {size} color={_color} />
 </button>
 

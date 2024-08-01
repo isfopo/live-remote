@@ -15,4 +15,5 @@
       value: 0,
       type: "int",
     })}
+  title="Stop"
 />

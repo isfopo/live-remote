@@ -19,4 +19,5 @@
       type: "int",
     })}
   color={$state.live.song.record_mode ? "record" : "foreground"}
+  title="Record"
 />
