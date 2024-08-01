@@ -1,5 +1,5 @@
 <script lang="ts">
-  import ThemeToggle from "./components/toggle/ThemeToggle.svelte";
+  import ThemeToggle from "./components/buttons/ThemeToggleButton.svelte";
   import { state } from "./state";
   import Connect from "./views/Connect.svelte";
   import Remote from "./views/Remote.svelte";
