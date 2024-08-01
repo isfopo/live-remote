@@ -1,7 +1,7 @@
 import { writable } from "svelte/store";
 import type { OutgoingMessage } from "./types/Message";
 import type { Live } from "./types/Live";
-import type { ThemeNames } from "./theme";
+import { themes, type ThemeColors, type ThemeNames } from "./theme";
 import { setRootColors } from "./helpers/styles";
 
 export type State = {
@@ -10,6 +10,7 @@ export type State = {
     current: ThemeNames;
     available: ThemeNames[];
     set: (theme: ThemeNames) => void;
+    get: (color: ThemeColors) => string;
   };
   live: Live;
   send: (message: OutgoingMessage) => void;
@@ -34,6 +35,22 @@ export const state = writable<State>({
         state.theme.current = theme;
         return state;
       });
+    },
+    get: (color: ThemeColors): string => {
+      let themeValue: string = "";
+
+      // Use subscribe to get the current state
+      state.subscribe((currentState) => {
+        const currentThemeName = currentState.theme.current; // Get the current theme name
+        const currentThemeColors = themes[currentThemeName]; // Access the colors for the current theme
+
+        // Safely access the color value
+        if (currentThemeColors && color in currentThemeColors) {
+          themeValue = currentThemeColors[color]; // Update the value
+        }
+      })(); // Immediately invoke to capture the current state
+
+      return themeValue;
     },
   },
   live: { song: { is_playing: 0, record_mode: 0, tempo: 120 } },

@@ -18,5 +18,7 @@
       value: 1,
       type: "int",
     })}
-  color={$state.live.song.record_mode ? "#dc143c" : "#000"}
+  color={$state.live.song.record_mode
+    ? $state.theme.get("record")
+    : $state.theme.get("foreground")}
 />

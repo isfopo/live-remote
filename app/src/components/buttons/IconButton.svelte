@@ -1,8 +1,9 @@
 <script lang="ts">
   import { Icon, type IconType } from "svelte-icons-pack";
+  import { state } from "../../state";
   export let onClick: () => void;
   export let icon: IconType;
-  export let color: string = "#000";
+  export let color: string = $state.theme.get("foreground");
   export let size: number = 48;
 </script>
 
