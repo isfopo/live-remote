@@ -39,16 +39,14 @@ export const state = writable<State>({
     get: (color: ThemeColors): string => {
       let themeValue: string = "";
 
-      // Use subscribe to get the current state
       state.subscribe((currentState) => {
-        const currentThemeName = currentState.theme.current; // Get the current theme name
-        const currentThemeColors = themes[currentThemeName]; // Access the colors for the current theme
+        const currentThemeName = currentState.theme.current;
+        const currentThemeColors = themes[currentThemeName];
 
-        // Safely access the color value
         if (currentThemeColors && color in currentThemeColors) {
-          themeValue = currentThemeColors[color]; // Update the value
+          themeValue = currentThemeColors[color];
         }
-      })(); // Immediately invoke to capture the current state
+      })();
 
       return themeValue;
     },
