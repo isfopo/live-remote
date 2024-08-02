@@ -1,5 +1,6 @@
 import type { ComponentType } from "svelte";
 import TransportWidget from "../widgets/TransportWidget.svelte";
+import type { Song } from "../types/Live";
 
 export type WidgetId = "transport";
 
@@ -16,7 +17,7 @@ export interface WidgetOnGrid {
 export interface WidgetMeta {
   component: ComponentType;
   name: string;
-  listeners: string[];
+  listeners: Array<keyof Song>;
 }
 
 export const widgets: Record<WidgetId, WidgetMeta> = {

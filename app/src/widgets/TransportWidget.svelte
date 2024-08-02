@@ -2,8 +2,11 @@
   import PlayButton from "../components/buttons/PlayButton.svelte";
   import RecordButton from "../components/buttons/RecordButton.svelte";
   import StopButton from "../components/buttons/StopButton.svelte";
+  import Widget from "./Widget.svelte";
 </script>
 
-<PlayButton />
-<StopButton />
-<RecordButton />
+<Widget id="transport">
+  <PlayButton />
+  <StopButton />
+  <RecordButton />
+</Widget>
