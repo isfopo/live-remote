@@ -3,15 +3,26 @@ import TransportWidget from "../widgets/TransportWidget.svelte";
 
 export type WidgetId = "transport";
 
-export interface WidgetItems {
+/** Represents the location of a widget on the user's grid */
+export interface WidgetOnGrid {
   id: WidgetId;
-  name: string;
   x: number;
   y: number;
   w: number;
   h: number;
 }
 
-export const widgets: Record<string, ComponentType> = {
-  transport: TransportWidget,
+/** Represents the data that a widget needs to render */
+export interface WidgetMeta {
+  component: ComponentType;
+  name: string;
+  listeners: string[];
+}
+
+export const widgets: Record<WidgetId, WidgetMeta> = {
+  transport: {
+    component: TransportWidget,
+    name: "Transport",
+    listeners: ["is_playing", "record_mode"],
+  },
 };
