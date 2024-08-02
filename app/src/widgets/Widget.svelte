@@ -38,11 +38,16 @@
 
 <style>
   .widget {
-    border: 1px solid #ccc;
+    border: none;
     width: 100%;
     border-radius: 8px;
     padding: 16px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: var(--them-surface);
+    box-shadow: 0 2px 4px var(--theme-shadow);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 </style>

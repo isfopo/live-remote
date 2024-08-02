@@ -1,8 +1,9 @@
 import { writable } from "svelte/store";
 import type { OutgoingMessage } from "./types/Message";
 import type { Live } from "./types/Live";
-import { themes, type ThemeColors, type ThemeNames } from "./theme";
+import { themes } from "./theme";
 import { setRootColors } from "./helpers/styles";
+import type { ThemeNames, ThemeColors } from "./theme/types";
 
 export type State = {
   socket: WebSocket | null;

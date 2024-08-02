@@ -1,4 +1,5 @@
-import { themes, type ThemeNames } from "../theme";
+import { themes } from "../theme";
+import { type ThemeNames } from "../theme/types";
 
 export const setRootColors = (theme: ThemeNames) => {
   for (let [prop, color] of Object.entries(themes[theme])) {
