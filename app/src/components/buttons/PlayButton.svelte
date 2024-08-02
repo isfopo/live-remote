@@ -15,6 +15,6 @@
       value: 1,
       type: "int",
     })}
-  color={$state.live.song.is_playing ? "play" : "foreground"}
+  color={$state.live.song.is_playing ? "primary" : "onPrimaryContainer"}
   title="Play"
 />

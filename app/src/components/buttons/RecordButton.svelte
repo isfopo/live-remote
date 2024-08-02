@@ -15,6 +15,6 @@
       value: 1,
       type: "int",
     })}
-  color={$state.live.song.record_mode ? "record" : "foreground"}
+  color={$state.live.song.record_mode ? "secondary" : "onPrimaryContainer"}
   title="Record"
 />

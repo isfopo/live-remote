@@ -6,7 +6,7 @@
   export let title: string;
   export let icon: IconType;
   export let size: number = 48;
-  export let color: ThemeColors = "onSurface";
+  export let color: ThemeColors = "onPrimaryContainer";
   export let onClick: () => void;
 
   let _color: string = $state.theme.get(color);
@@ -25,6 +25,7 @@
     border: none;
     background: none;
     padding: 0;
+    margin: 0;
     cursor: pointer;
   }
   button:hover,

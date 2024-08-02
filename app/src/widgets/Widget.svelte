@@ -42,11 +42,10 @@
     width: 100%;
     border-radius: 8px;
     padding: 16px;
-    background-color: var(--them-surface);
-    box-shadow: 0 2px 4px var(--theme-shadow);
+    background-color: var(--theme-primaryContainer);
 
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
   }
