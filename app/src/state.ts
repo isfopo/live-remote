@@ -4,6 +4,7 @@ import type { Live } from "./types/Live";
 import { themes } from "./theme";
 import { setRootColors } from "./helpers/styles";
 import type { ThemeNames, ThemeColors } from "./theme/types";
+import type { WidgetOnGrid } from "./widgets";
 
 export type State = {
   socket: WebSocket | null;
@@ -18,6 +19,7 @@ export type State = {
   error: string | undefined;
   grid: {
     editing: boolean;
+    items: WidgetOnGrid[];
   };
 };
 
@@ -65,7 +67,12 @@ export const state = writable<State>({
     });
   },
   error: undefined,
-  grid: { editing: false },
+  grid: {
+    editing: false,
+    items: localStorage.getItem("gridItems")
+      ? JSON.parse(localStorage.getItem("gridItems") ?? "")
+      : [{ id: "transport", x: 0, y: 0, w: 2, h: 5 }],
+  },
 });
 
 setRootColors(initialTheme);
