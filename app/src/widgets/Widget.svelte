@@ -50,7 +50,22 @@
     align-items: center;
   }
 
+  @keyframes wobble {
+    0% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(5deg);
+    }
+    75% {
+      transform: rotate(-5deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+
   .editing {
-    border: 2px dashed var(--theme-primary);
+    animation: wobble 0.5s linear infinite;
   }
 </style>
