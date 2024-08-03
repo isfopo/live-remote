@@ -9,7 +9,10 @@
   onClick={() => {
     state.update((state) => ({
       ...state,
-      editing: !state.editing,
+      editing: {
+        ...state.grid,
+        editing: !state.grid.editing,
+      },
     }));
   }}
   title="Edit"

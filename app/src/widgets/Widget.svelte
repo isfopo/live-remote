@@ -32,7 +32,7 @@
   });
 </script>
 
-<div class={`widget ${$state.editing ? "editing" : ""}`}>
+<div class={`widget ${$state.grid.editing ? "editing" : ""}`}>
   <slot />
 </div>
 
@@ -48,6 +48,8 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+
+    transition: background-color 0.2s ease-in-out;
   }
 
   @keyframes wobble {
