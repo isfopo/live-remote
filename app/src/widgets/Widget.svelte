@@ -42,7 +42,7 @@
     width: 100%;
     border-radius: 8px;
     padding: 16px;
-    background-color: var(--theme-primaryContainer);
+    background-color: transparent;
 
     display: flex;
     flex-direction: row;
@@ -66,6 +66,8 @@
   }
 
   .editing {
+    background-color: var(--theme-primaryContainer);
     animation: wobble 0.5s linear infinite;
+    pointer-events: none;
   }
 </style>
