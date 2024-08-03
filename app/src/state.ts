@@ -16,6 +16,7 @@ export type State = {
   live: Live;
   send: (message: OutgoingMessage) => void;
   error: string | undefined;
+  editing: boolean;
 };
 
 const initialTheme = (localStorage.getItem("currentTheme") ??
@@ -62,6 +63,7 @@ export const state = writable<State>({
     });
   },
   error: undefined,
+  editing: false,
 });
 
 setRootColors(initialTheme);

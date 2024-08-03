@@ -32,7 +32,7 @@
   });
 </script>
 
-<div class="widget">
+<div class={`widget ${$state.editing ? "editing" : ""}`}>
   <slot />
 </div>
 
@@ -48,5 +48,9 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+  }
+
+  .editing {
+    border: 2px dashed var(--theme-primary);
   }
 </style>
