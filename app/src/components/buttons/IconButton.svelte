@@ -28,6 +28,7 @@
     margin: 0;
     cursor: pointer;
   }
+
   button:hover,
   button:focus,
   button:active {
