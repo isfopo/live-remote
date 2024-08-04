@@ -4,7 +4,6 @@ import type { Live } from "./types/Live";
 import { themes } from "./theme";
 import { setRootColors } from "./helpers/styles";
 import type { ThemeNames, ThemeColors } from "./theme/types";
-import type { LayoutItem } from "svelte-grid-extended";
 import type { WidgetOnGrid } from "./widgets";
 
 export type State = {
