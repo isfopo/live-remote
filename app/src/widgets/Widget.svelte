@@ -3,6 +3,7 @@
   import { widgets, type WidgetId } from "../widgets";
   import { state } from "../state";
   import { Method } from "../types/Message";
+  import RemoveButton from "../components/buttons/RemoveButton.svelte";
 
   export let id: WidgetId;
 
@@ -33,7 +34,10 @@
 </script>
 
 <div class={`widget ${$state.grid.editing ? "editing" : ""}`}>
-  <slot />
+  <RemoveButton {id} />
+  <div class={$state.grid.editing ? "block-events" : ""}>
+    <slot />
+  </div>
 </div>
 
 <style>
@@ -70,6 +74,9 @@
   .editing {
     background-color: var(--theme-primaryContainer);
     animation: wobble 0.5s linear infinite;
+  }
+
+  .block-event {
     pointer-events: none;
   }
 </style>

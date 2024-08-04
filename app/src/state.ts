@@ -21,6 +21,7 @@ export type State = {
     editing: boolean;
     items: WidgetOnGrid[];
     update: (item: WidgetOnGrid) => void;
+    remove: (id: string) => void;
   };
 };
 
@@ -82,6 +83,13 @@ export const state = writable<State>({
             ...item,
           };
         }
+        localStorage.setItem("gridItems", JSON.stringify(state.grid.items));
+        return state;
+      });
+    },
+    remove: (id: string): void => {
+      state.update((state): State => {
+        state.grid.items = state.grid.items.filter((item) => item.id !== id);
         localStorage.setItem("gridItems", JSON.stringify(state.grid.items));
         return state;
       });
