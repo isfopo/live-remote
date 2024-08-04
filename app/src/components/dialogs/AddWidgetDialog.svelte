@@ -26,13 +26,15 @@
   const getWidgetName = (id: string) => {
     return widgets[id as WidgetId].name;
   };
+
+  const notOnGrid = (id: string) => !$state.grid.items.find((w) => w.id === id);
 </script>
 
 <Dialog isOpen={$state.grid.adding} close={closeAddMenu} success={addWidget}>
   <h2>Select a Widget</h2>
 
   {#each Object.keys(widgets) as id}
-    {#if !$state.grid.items.find((w) => w.id === id)}
+    {#if notOnGrid(id)}
       <button on:click={() => onSelect(id)}>
         {getWidgetName(id)}
       </button>
