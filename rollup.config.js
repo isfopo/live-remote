@@ -67,6 +67,7 @@ export default {
     typescript({
       sourceMap: false,
       inlineSources: false,
+      lib: ["es2020", "dom"],
     }),
 
     // If we're building for production (npm run build
