@@ -11,7 +11,7 @@
   <IconButton
     icon={FaSolidX}
     onClick={() => $state.grid.remove(id)}
-    color="primaryContainer"
+    color="inverseOnSurface"
     title="Remove"
     size={24}
   />
@@ -25,7 +25,7 @@
     padding: 0.5rem;
     opacity: 0;
     transition: transform 0.2s opacity 0.2s;
-    background-color: var(--theme-onPrimaryContainer);
+    background-color: var(--theme-inverseSurface);
     border-radius: 50%;
     cursor: pointer;
     z-index: 100;
