@@ -32,8 +32,10 @@
   <h2>Select a Widget</h2>
 
   {#each Object.keys(widgets) as id}
-    <button on:click={() => onSelect(id)}>
-      {getWidgetName(id)}
-    </button>
+    {#if !$state.grid.items.find((w) => w.id === id)}
+      <button on:click={() => onSelect(id)}>
+        {getWidgetName(id)}
+      </button>
+    {/if}
   {/each}
 </Dialog>
