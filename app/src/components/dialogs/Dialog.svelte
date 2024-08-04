@@ -49,4 +49,11 @@
     transition: opacity 0.2s ease-in-out;
     background-color: var(--theme-shadow);
   }
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    justify-content: flex-start;
+    margin-bottom: 16px;
+  }
 </style>
