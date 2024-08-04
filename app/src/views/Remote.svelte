@@ -2,23 +2,24 @@
   import Grid, {
     GridItem,
     type LayoutChangeDetail,
+    type LayoutItem,
   } from "svelte-grid-extended";
   import { widgets, type WidgetOnGrid } from "../widgets";
   import { state } from "../state";
-
-  function handleGridChange(e: CustomEvent<LayoutChangeDetail>) {
-    console.log(e.detail);
-    // localStorage.setItem("gridItems", JSON.stringify(e.detail.item));
-  }
+  import Widget from "../widgets/Widget.svelte";
 
   const itemSize = { height: 40 };
+
+  const change = (e: CustomEvent<LayoutChangeDetail>): void => {
+    $state.grid.update(e.detail.item as WidgetOnGrid);
+  };
 </script>
 
 <Grid
   {itemSize}
   cols={10}
   collision="none"
-  on:change={handleGridChange}
+  on:change={change}
   readOnly={!$state.grid.editing}
 >
   {#each $state.grid.items as { id, x, y, w, h }}

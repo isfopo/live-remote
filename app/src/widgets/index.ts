@@ -1,11 +1,12 @@
 import type { ComponentType } from "svelte";
 import TransportWidget from "../widgets/TransportWidget.svelte";
 import type { Song } from "../types/Live";
+import type { LayoutItem } from "svelte-grid-extended";
 
 export type WidgetId = "transport";
 
 /** Represents the location of a widget on the user's grid */
-export interface WidgetOnGrid {
+export interface WidgetOnGrid extends LayoutItem {
   id: WidgetId;
   x: number;
   y: number;

@@ -4,6 +4,7 @@ import type { Live } from "./types/Live";
 import { themes } from "./theme";
 import { setRootColors } from "./helpers/styles";
 import type { ThemeNames, ThemeColors } from "./theme/types";
+import type { LayoutItem } from "svelte-grid-extended";
 import type { WidgetOnGrid } from "./widgets";
 
 export type State = {
@@ -20,6 +21,7 @@ export type State = {
   grid: {
     editing: boolean;
     items: WidgetOnGrid[];
+    update: (item: WidgetOnGrid) => void;
   };
 };
 
@@ -72,6 +74,19 @@ export const state = writable<State>({
     items: localStorage.getItem("gridItems")
       ? JSON.parse(localStorage.getItem("gridItems") ?? "")
       : [{ id: "transport", x: 0, y: 0, w: 2, h: 5 }],
+    update: (item: WidgetOnGrid): void => {
+      state.update((state): State => {
+        const index = state.grid.items.findIndex((i) => i.id === item.id);
+        if (index !== -1) {
+          state.grid.items[index] = {
+            ...state.grid.items[index],
+            ...item,
+          };
+        }
+        localStorage.setItem("gridItems", JSON.stringify(state.grid.items));
+        return state;
+      });
+    },
   },
 });
 
