@@ -1,24 +1,52 @@
 <script lang="ts">
   export let isOpen: boolean = false;
   export let close: () => void;
+  export let success: () => void;
+
+  let dialog: HTMLDialogElement;
+
+  const _close: () => void = () => {
+    dialog.close();
+    close();
+  };
+
+  const _success: () => void = () => {
+    dialog.close();
+    success();
+  };
+
+  $: {
+    if (isOpen) {
+      dialog?.showModal();
+    } else {
+      dialog?.close();
+    }
+  }
 </script>
 
-<dialog class="dialog" open={isOpen} on:close={close}>
-  <slot></slot>
-  <button type="button" on:click={close}>Close</button>
+<dialog bind:this={dialog} on:close={_close}>
+  <span class="body">
+    <slot />
+  </span>
+  <button type="button" on:click={_close}>Close</button>
+  <button type="button" on:click={_success}>Submit</button>
 </dialog>
 
 <style>
-  .dialog {
+  dialog {
     border: none;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    margin: auto;
     border-radius: 8px;
     padding: 16px;
     width: 300px;
     color: var(--theme-onSurface);
     background-color: var(--theme-surfaceBright);
+  }
+
+  dialog::backdrop {
+    opacity: 0.5;
+    transition: opacity 0.2s ease-in-out;
+    background-color: var(--theme-shadow);
   }
 </style>

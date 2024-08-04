@@ -28,7 +28,7 @@
   };
 </script>
 
-<Dialog isOpen={true} close={closeAddMenu}>
+<Dialog isOpen={$state.grid.adding} close={closeAddMenu} success={addWidget}>
   <h2>Select a Widget</h2>
 
   {#each Object.keys(widgets) as id}
@@ -36,7 +36,4 @@
       {getWidgetName(id)}
     </button>
   {/each}
-
-  <button on:click={addWidget} disabled={!selectedWidget}>Add</button>
-  <button on:click={closeAddMenu}>Cancel</button>
 </Dialog>
