@@ -76,7 +76,7 @@
     animation: wobble 0.5s linear infinite;
   }
 
-  .block-event {
+  .block-events {
     pointer-events: none;
   }
 </style>

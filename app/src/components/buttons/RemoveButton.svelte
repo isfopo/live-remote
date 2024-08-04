@@ -13,14 +13,15 @@
     onClick={() => $state.grid.remove(id)}
     color="primaryContainer"
     title="Remove"
+    size={24}
   />
 </span>
 
 <style>
   .remove-button {
     position: absolute;
-    top: -2rem;
-    right: -2rem;
+    top: -1.5rem;
+    right: -1.5rem;
     padding: 0.5rem;
     opacity: 0;
     transition: transform 0.2s opacity 0.2s;
