@@ -30,6 +30,8 @@ const initialTheme = (localStorage.getItem("currentTheme") ??
     ? "dark"
     : "light")) as ThemeNames;
 
+const defaultGrid = [{ id: "transport", x: 0, y: 0, w: 2, h: 5 }];
+
 export const state = writable<State>({
   socket: null,
   theme: {
@@ -73,7 +75,7 @@ export const state = writable<State>({
     editing: false,
     items: localStorage.getItem("gridItems")
       ? JSON.parse(localStorage.getItem("gridItems") ?? "")
-      : [{ id: "transport", x: 0, y: 0, w: 2, h: 5 }],
+      : defaultGrid,
     update: (item: WidgetOnGrid): void => {
       state.update((state): State => {
         const index = state.grid.items.findIndex((i) => i.id === item.id);
