@@ -4,7 +4,7 @@ import type { Live } from "./types/Live";
 import { themes } from "./theme";
 import { setRootColors } from "./helpers/styles";
 import type { ThemeNames, ThemeColors } from "./theme/types";
-import type { WidgetOnGrid } from "./widgets";
+import type { WidgetId, WidgetOnGrid } from "./widgets";
 
 export type State = {
   socket: WebSocket | null;
@@ -21,7 +21,7 @@ export type State = {
     editing: boolean;
     items: WidgetOnGrid[];
     update: (item: WidgetOnGrid) => void;
-    remove: (id: string) => void;
+    remove: (id: WidgetId) => void;
   };
 };
 
@@ -87,7 +87,7 @@ export const state = writable<State>({
         return state;
       });
     },
-    remove: (id: string): void => {
+    remove: (id: WidgetId): void => {
       state.update((state): State => {
         state.grid.items = state.grid.items.filter((item) => item.id !== id);
         localStorage.setItem("gridItems", JSON.stringify(state.grid.items));
