@@ -30,15 +30,13 @@
 
 <Dialog isOpen={true} close={closeAddMenu}>
   <h2>Select a Widget</h2>
-  <ul>
-    {#each Object.keys(widgets) as id}
-      <li>
-        <button on:click={() => onSelect(id)}>
-          {getWidgetName(id)}
-        </button>
-      </li>
-    {/each}
-  </ul>
+
+  {#each Object.keys(widgets) as id}
+    <button on:click={() => onSelect(id)}>
+      {getWidgetName(id)}
+    </button>
+  {/each}
+
   <button on:click={addWidget} disabled={!selectedWidget}>Add</button>
   <button on:click={closeAddMenu}>Cancel</button>
 </Dialog>
