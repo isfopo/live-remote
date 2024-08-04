@@ -94,6 +94,8 @@ export const state = writable<State>({
     adding: false,
     add: (item: WidgetId): void => {
       state.update((state): State => {
+        if (state.grid.items.find((i) => i.id === item)) return state;
+
         state.grid.items.push({
           id: item,
           x: 0,
