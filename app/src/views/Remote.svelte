@@ -2,11 +2,10 @@
   import Grid, {
     GridItem,
     type LayoutChangeDetail,
-    type LayoutItem,
   } from "svelte-grid-extended";
   import { widgets, type WidgetOnGrid } from "../widgets";
   import { state } from "../state";
-  import Widget from "../widgets/Widget.svelte";
+  import DialogContainer from "../components/dialogs/DialogContainer.svelte";
 
   const itemSize = { height: 40 };
 
@@ -28,3 +27,5 @@
     </GridItem>
   {/each}
 </Grid>
+
+<DialogContainer />
