@@ -1,7 +1,7 @@
 <script lang="ts">
   export let isOpen: boolean = false;
   export let close: () => void;
-  export let success: () => void | undefined;
+  export let success: (() => void) | undefined = undefined;
 
   let dialog: HTMLDialogElement;
 
@@ -12,7 +12,7 @@
 
   const _success: () => void = () => {
     dialog.close();
-    success();
+    success?.();
   };
 
   $: {

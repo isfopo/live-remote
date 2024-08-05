@@ -13,7 +13,7 @@
   };
 
   const onSelect = (id: string) => {
-    selectedWidget = id as WidgetId;
+    $state.grid.add(id as WidgetId);
     closeAddMenu();
   };
 
