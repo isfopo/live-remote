@@ -105,6 +105,7 @@ export const state = writable<State>({
           w,
           h,
         } as WidgetOnGrid);
+
         localStorage.setItem("gridItems", JSON.stringify(state.grid.items));
         return state;
       });
