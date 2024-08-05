@@ -17,7 +17,7 @@
 <Grid
   {itemSize}
   cols={10}
-  collision="none"
+  collision="push"
   on:change={change}
   readOnly={!$state.grid.editing}
 >
