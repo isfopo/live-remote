@@ -28,7 +28,7 @@ export const widgets: Record<WidgetId, WidgetMeta> = {
     component: TransportWidget,
     name: "Transport",
     listeners: ["is_playing", "record_mode"],
-    w: 5,
+    w: 2,
     h: 2,
   },
 };
