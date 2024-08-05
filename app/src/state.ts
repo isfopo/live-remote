@@ -4,7 +4,7 @@ import type { Live } from "./types/Live";
 import { themes } from "./theme";
 import { setRootColors } from "./helpers/styles";
 import type { ThemeNames, ThemeColors } from "./theme/types";
-import type { WidgetId, WidgetOnGrid } from "./widgets";
+import { widgets, type WidgetId, type WidgetOnGrid } from "./widgets";
 
 export type State = {
   socket: WebSocket | null;
@@ -32,7 +32,7 @@ const initialTheme = (localStorage.getItem("currentTheme") ??
     ? "dark"
     : "light")) as ThemeNames;
 
-const defaultGrid = [{ id: "transport", x: 0, y: 0, w: 2, h: 5 }];
+const defaultGrid = [widgets["transport"]];
 
 export const state = writable<State>({
   socket: null,
@@ -92,16 +92,18 @@ export const state = writable<State>({
       });
     },
     adding: false,
-    add: (item: WidgetId): void => {
+    add: (id: WidgetId): void => {
       state.update((state): State => {
-        if (state.grid.items.find((i) => i.id === item)) return state;
+        if (state.grid.items.find((i) => i.id === id)) return state;
+
+        const { w, h } = widgets[id];
 
         state.grid.items.push({
-          id: item,
+          id,
           x: 0,
           y: 0,
-          w: 1,
-          h: 1,
+          w,
+          h,
         } as WidgetOnGrid);
         localStorage.setItem("gridItems", JSON.stringify(state.grid.items));
         return state;

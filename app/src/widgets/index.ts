@@ -19,6 +19,8 @@ export interface WidgetMeta {
   component: ComponentType;
   name: string;
   listeners: Array<keyof Song>;
+  w: number;
+  h: number;
 }
 
 export const widgets: Record<WidgetId, WidgetMeta> = {
@@ -26,5 +28,7 @@ export const widgets: Record<WidgetId, WidgetMeta> = {
     component: TransportWidget,
     name: "Transport",
     listeners: ["is_playing", "record_mode"],
+    w: 5,
+    h: 2,
   },
 };
