@@ -7,7 +7,6 @@ import threading
 from typing import Any, Callable, Dict, Union
 
 from _Framework import ControlSurface
-from .helpers.ports import is_port_open
 
 
 class WebsocketServer(threading.Thread):
@@ -21,7 +20,7 @@ class WebsocketServer(threading.Thread):
     def __init__(
         self,
         control_surface: ControlSurface.ControlSurface,
-        port=1000,
+        port=7070,
         on_connect: Union[Callable[[int], None], None] = None,
         on_message: Union[Callable[[int, Union[Any, None]], None], None] = None,
         on_disconnect: Union[Callable[[int], None], None] = None,
@@ -38,25 +37,20 @@ class WebsocketServer(threading.Thread):
 
     def run(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.find_port()
-        self.sock.bind(("0.0.0.0", self.port))
-        self.sock.listen(1)
 
-        while True:
-            conn, addr = self.sock.accept()
+        try:
+            self.sock.bind(("0.0.0.0", self.port))
+            self.sock.listen(1)
 
-            self.client_thread = threading.Thread(
-                target=self.handle_client, args=(conn, addr)
-            )
-            self.client_thread.start()
+            while True:
+                conn, addr = self.sock.accept()
 
-    def find_port(self):
-        desired_port = self.port
-        while not is_port_open(desired_port):
-            desired_port += 1
-            if desired_port > 65535:
-                raise Exception("No available ports")
-        self.port = desired_port
+                self.client_thread = threading.Thread(
+                    target=self.handle_client, args=(conn, addr)
+                )
+                self.client_thread.start()
+        except Exception:
+            self.run()
 
     def handle_client(self, conn: socket.socket, addr):
         data = conn.recv(1024)
@@ -211,5 +205,5 @@ class WebsocketServer(threading.Thread):
 
         self.sock.close()
 
-        if self.client_thread is not None:
+        if hasattr(self, "client_thread"):
             self.client_thread.join()
