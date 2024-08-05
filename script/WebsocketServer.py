@@ -37,6 +37,7 @@ class WebsocketServer(threading.Thread):
 
     def run(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
         try:
             self.sock.bind(("0.0.0.0", self.port))
@@ -200,10 +201,10 @@ class WebsocketServer(threading.Thread):
     def stop(self):
         self._is_running = False
 
-        for client_id in self.clients:
+        for client_id in list(self.clients.keys()):  # Use a list to avoid RuntimeError
             self.clients[client_id].close()
 
-        self.sock.close()
-
+        if self.sock:
+            self.sock.close()
         if hasattr(self, "client_thread"):
             self.client_thread.join()

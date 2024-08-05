@@ -37,6 +37,9 @@ class HttpServer:
 
     def run_server(self):
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.server_socket.setsockopt(
+            socket.SOL_SOCKET, socket.SO_REUSEADDR, 1
+        )
         self.server_socket.bind((self.host, self.port))
         self.server_socket.listen(1)
 
@@ -126,5 +129,5 @@ class HttpServer:
         self.running = False
         if self.server_socket:
             self.server_socket.close()
-        if self.server_thread:
+            self.server_socket = None
             self.server_thread.join()
