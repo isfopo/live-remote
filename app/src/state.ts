@@ -18,10 +18,10 @@ export type State = {
   send: (message: OutgoingMessage) => void;
   error: string | undefined;
   grid: {
-    editing: boolean;
     items: WidgetOnGrid[];
-    update: (item: WidgetOnGrid) => void;
+    editing: boolean;
     adding: boolean;
+    update: (item: WidgetOnGrid) => void;
     add: (item: WidgetId) => void;
     remove: (id: WidgetId) => void;
   };
