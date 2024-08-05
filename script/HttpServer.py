@@ -112,8 +112,6 @@ class HttpServer:
                     b"HTTP/1.1 404 NOT FOUND\r\n\r\n<h1>404 Not Found</h1>"
                 )
                 client_socket.sendall(not_found_response)
-            finally:
-                client_socket.close()
 
         self.server_socket.close()
 
