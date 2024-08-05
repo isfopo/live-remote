@@ -37,9 +37,7 @@ class HttpServer:
 
     def run_server(self):
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.server_socket.setsockopt(
-            socket.SOL_SOCKET, socket.SO_REUSEADDR, 1
-        )
+        self.server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.server_socket.bind((self.host, self.port))
         self.server_socket.listen(1)
 
@@ -105,10 +103,11 @@ class HttpServer:
                     response_header += f"Content-Length: {len(file_content)}\r\n"
                     response_header += "Connection: closed\r\n\r\n"
 
-                    # Ensure everything is bytes before concatenation
-                    client_socket.sendall(
-                        response_header.encode("utf-8") + file_content
-                    )
+                    if client_socket is not None:
+                        # Ensure everything is bytes before concatenation
+                        client_socket.sendall(
+                            response_header.encode("utf-8") + file_content
+                        )
 
             except FileNotFoundError:
                 not_found_response = (
