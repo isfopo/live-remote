@@ -7,7 +7,7 @@ import threading
 from typing import Any, Callable, Dict, Union
 
 from _Framework import ControlSurface
-from .constants import WEBSOCKET_PORT
+from .helpers.ports import is_port_open
 
 
 class WebsocketServer(threading.Thread):
@@ -21,7 +21,7 @@ class WebsocketServer(threading.Thread):
     def __init__(
         self,
         control_surface: ControlSurface.ControlSurface,
-        port=WEBSOCKET_PORT,
+        port=1000,
         on_connect: Union[Callable[[int], None], None] = None,
         on_message: Union[Callable[[int, Union[Any, None]], None], None] = None,
         on_disconnect: Union[Callable[[int], None], None] = None,
@@ -38,6 +38,7 @@ class WebsocketServer(threading.Thread):
 
     def run(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.find_port()
         self.sock.bind(("0.0.0.0", self.port))
         self.sock.listen(1)
 
@@ -48,6 +49,14 @@ class WebsocketServer(threading.Thread):
                 target=self.handle_client, args=(conn, addr)
             )
             self.client_thread.start()
+
+    def find_port(self):
+        desired_port = self.port
+        while not is_port_open(desired_port):
+            desired_port += 1
+            if desired_port > 65535:
+                raise Exception("No available ports")
+        self.port = desired_port
 
     def handle_client(self, conn: socket.socket, addr):
         data = conn.recv(1024)

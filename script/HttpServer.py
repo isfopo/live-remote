@@ -3,13 +3,20 @@ import socket
 import threading
 import os
 
-from .constants import HTTP_SERVER_PORT, WEBSOCKET_PORT
+from .constants import HTTP_SERVER_PORT
 
 
 class HttpServer:
-    def __init__(self, host="0.0.0.0", port=HTTP_SERVER_PORT, web_root="public"):
+    def __init__(
+        self,
+        websocket_port: int,
+        host: str = "0.0.0.0",
+        port: int = HTTP_SERVER_PORT,
+        web_root: str = "public",
+    ):
         self.host = host
         self.port = port
+        self.websocket_port = websocket_port
         self.web_root = web_root
         self.server_ip = socket.gethostbyname(socket.gethostname())
         self.server_thread = threading.Thread(target=self.run_server)
@@ -82,7 +89,7 @@ class HttpServer:
                             "{{SERVER_IP}}", self.server_ip
                         )
                         file_content = file_content.replace(
-                            "{{SERVER_PORT}}", str(WEBSOCKET_PORT)
+                            "{{SERVER_PORT}}", str(self.websocket_port)
                         )
                         file_content = file_content.encode("utf-8")
                     else:
