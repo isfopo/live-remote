@@ -1,7 +1,7 @@
 <script lang="ts">
   export let isOpen: boolean = false;
   export let close: () => void;
-  export let success: () => void;
+  export let success: () => void | undefined;
 
   let dialog: HTMLDialogElement;
 
@@ -29,7 +29,9 @@
     <slot />
   </span>
   <button type="button" on:click={_close}>Close</button>
-  <button type="button" on:click={_success}>Submit</button>
+  {#if success !== undefined}
+    <button type="button" on:click={_success}>Submit</button>
+  {/if}
 </dialog>
 
 <style>

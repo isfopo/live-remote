@@ -12,15 +12,9 @@
     });
   };
 
-  const addWidget = () => {
-    if (selectedWidget) {
-      $state.grid.add(selectedWidget);
-    }
-    closeAddMenu();
-  };
-
   const onSelect = (id: string) => {
     selectedWidget = id as WidgetId;
+    closeAddMenu();
   };
 
   const getWidgetName = (id: string) => {
@@ -28,7 +22,7 @@
   };
 </script>
 
-<Dialog isOpen={$state.grid.adding} close={closeAddMenu} success={addWidget}>
+<Dialog isOpen={$state.grid.adding} close={closeAddMenu}>
   <h2>Select a Widget</h2>
 
   <p>
