@@ -1,4 +1,4 @@
-# LiveRemote
+# Live Remote
 
 Control Ableton Live from any device on a local network.
 
