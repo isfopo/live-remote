@@ -46,11 +46,13 @@ class WebsocketServer(threading.Thread):
             while True:
                 conn, addr = self.sock.accept()
 
-                self.client_thread = threading.Thread(
-                    target=self.handle_client, args=(conn, addr)
-                )
-                self.client_thread.start()
-        except Exception:
+                if conn and conn.fileno() != -1:
+                    self.client_thread = threading.Thread(
+                        target=self.handle_client, args=(conn, addr)
+                    )
+                    self.client_thread.start()
+        except Exception as e:
+            self.control_surface.log_message(f"Websocket Server Error: {e}")
             self.run()
 
     def handle_client(self, conn: socket.socket, addr):
@@ -114,16 +116,20 @@ class WebsocketServer(threading.Thread):
                         client_id, self.parse_payload_to_object(payload_data)
                     )
 
-        except (ConnectionResetError, BrokenPipeError):
+        except (ConnectionResetError, BrokenPipeError) as e:
+            self.control_surface.log_message(f"Connection error: {type(e)} - {e}")
             self.handle_disconnect(client_id)
 
     def handle_disconnect(self, client_id):
         if self.on_disconnect:
             self.on_disconnect(client_id)
 
-        self.clients[client_id].close()
-
-        del self.clients[client_id]
+        conn = self.clients.pop(client_id, None)
+        if conn:
+            try:
+                conn.close()
+            except OSError as e:
+                self.control_surface.log_message(f"Error closing connection: {e}")
 
     def assign_client_id_and_connect(self, conn):
         client_id = self._client_code_counter

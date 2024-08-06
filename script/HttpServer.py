@@ -3,17 +3,21 @@ import socket
 import threading
 import os
 
+from _Framework import ControlSurface
+
 from .constants import HTTP_SERVER_PORT
 
 
 class HttpServer:
     def __init__(
         self,
+        control_surface: ControlSurface.ControlSurface,
         websocket_port: int,
         host: str = "0.0.0.0",
         port: int = HTTP_SERVER_PORT,
         web_root: str = "public",
     ):
+        self.control_surface = control_surface
         self.host = host
         self.port = port
         self.websocket_port = websocket_port
@@ -114,8 +118,6 @@ class HttpServer:
                     b"HTTP/1.1 404 NOT FOUND\r\n\r\n<h1>404 Not Found</h1>"
                 )
                 client_socket.sendall(not_found_response)
-
-        self.server_socket.close()
 
     def parse_request(self, request_line):
         try:
