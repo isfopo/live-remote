@@ -109,7 +109,7 @@ class HttpServer:
 
                     if client_socket is not None:
                         # Ensure everything is bytes before concatenation
-                        client_socket.sendall(
+                        client_socket.send(
                             response_header.encode("utf-8") + file_content
                         )
 
