@@ -112,12 +112,17 @@ class HttpServer:
                         client_socket.send(
                             response_header.encode("utf-8") + file_content
                         )
+                    client_socket.close()
 
             except FileNotFoundError:
                 not_found_response = (
                     b"HTTP/1.1 404 NOT FOUND\r\n\r\n<h1>404 Not Found</h1>"
                 )
                 client_socket.send(not_found_response)
+                client_socket.close()
+
+            except Exception as e:
+                self.control_surface.log_message(f"Error: {e}")
 
     def parse_request(self, request_line):
         try:
