@@ -1,13 +1,13 @@
 from __future__ import with_statement
 import socket
 import os
-from threading import Thread
+import threading
 
 from _Framework import ControlSurface
 from .constants import HTTP_SERVER_PORT
 
 
-class HttpServer(Thread):  # Now inheriting from Thread
+class HttpServer(threading.Thread):  # Now inheriting from Thread
     def __init__(
         self,
         control_surface: ControlSurface.ControlSurface,
@@ -126,4 +126,5 @@ class HttpServer(Thread):  # Now inheriting from Thread
         if self.server_socket:
             self.server_socket.close()
             self.server_socket = None
-            self.join()  # Wait for the thread to finish
+
+        self.join()
