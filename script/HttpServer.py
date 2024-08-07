@@ -117,7 +117,7 @@ class HttpServer:
                 not_found_response = (
                     b"HTTP/1.1 404 NOT FOUND\r\n\r\n<h1>404 Not Found</h1>"
                 )
-                client_socket.sendall(not_found_response)
+                client_socket.send(not_found_response)
 
     def parse_request(self, request_line):
         try:
