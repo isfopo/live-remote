@@ -1,4 +1,6 @@
 <script lang="ts">
+  import AddButton from "./components/buttons/AddButton.svelte";
+  import EditButton from "./components/buttons/EditButton.svelte";
   import ThemeToggle from "./components/buttons/ThemeToggleButton.svelte";
   import { state } from "./state";
   import Connect from "./views/Connect.svelte";
@@ -8,6 +10,8 @@
 <main>
   <header>
     <ThemeToggle />
+    <EditButton />
+    <AddButton />
   </header>
   {#if $state.socket && $state.socket.readyState === WebSocket.OPEN}
     <Remote />

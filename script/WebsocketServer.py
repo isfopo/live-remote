@@ -7,7 +7,6 @@ import threading
 from typing import Any, Callable, Dict, Union
 
 from _Framework import ControlSurface
-from .constants import WEBSOCKET_PORT
 
 
 class WebsocketServer(threading.Thread):
@@ -21,7 +20,7 @@ class WebsocketServer(threading.Thread):
     def __init__(
         self,
         control_surface: ControlSurface.ControlSurface,
-        port=WEBSOCKET_PORT,
+        port=7070,
         on_connect: Union[Callable[[int], None], None] = None,
         on_message: Union[Callable[[int, Union[Any, None]], None], None] = None,
         on_disconnect: Union[Callable[[int], None], None] = None,
@@ -38,16 +37,23 @@ class WebsocketServer(threading.Thread):
 
     def run(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.sock.bind(("0.0.0.0", self.port))
-        self.sock.listen(1)
+        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-        while True:
-            conn, addr = self.sock.accept()
+        try:
+            self.sock.bind(("0.0.0.0", self.port))
+            self.sock.listen(1)
 
-            self.client_thread = threading.Thread(
-                target=self.handle_client, args=(conn, addr)
-            )
-            self.client_thread.start()
+            while True:
+                conn, addr = self.sock.accept()
+
+                if conn and conn.fileno() != -1:
+                    self.client_thread = threading.Thread(
+                        target=self.handle_client, args=(conn, addr)
+                    )
+                    self.client_thread.start()
+        except Exception as e:
+            self.control_surface.log_message(f"Websocket Server Error: {e}")
+            self.run()
 
     def handle_client(self, conn: socket.socket, addr):
         data = conn.recv(1024)
@@ -110,16 +116,20 @@ class WebsocketServer(threading.Thread):
                         client_id, self.parse_payload_to_object(payload_data)
                     )
 
-        except (ConnectionResetError, BrokenPipeError):
+        except (ConnectionResetError, BrokenPipeError) as e:
+            self.control_surface.log_message(f"Connection error: {type(e)} - {e}")
             self.handle_disconnect(client_id)
 
     def handle_disconnect(self, client_id):
         if self.on_disconnect:
             self.on_disconnect(client_id)
 
-        self.clients[client_id].close()
-
-        del self.clients[client_id]
+        conn = self.clients.pop(client_id, None)
+        if conn:
+            try:
+                conn.close()
+            except OSError as e:
+                self.control_surface.log_message(f"Error closing connection: {e}")
 
     def assign_client_id_and_connect(self, conn):
         client_id = self._client_code_counter
@@ -197,10 +207,10 @@ class WebsocketServer(threading.Thread):
     def stop(self):
         self._is_running = False
 
-        for client_id in self.clients:
+        for client_id in list(self.clients.keys()):  # Use a list to avoid RuntimeError
             self.clients[client_id].close()
 
-        self.sock.close()
-
-        if self.client_thread is not None:
+        if self.sock:
+            self.sock.close()
+        if hasattr(self, "client_thread"):
             self.client_thread.join()

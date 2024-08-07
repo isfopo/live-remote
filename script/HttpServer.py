@@ -3,13 +3,24 @@ import socket
 import threading
 import os
 
-from .constants import HTTP_SERVER_PORT, WEBSOCKET_PORT
+from _Framework import ControlSurface
+
+from .constants import HTTP_SERVER_PORT
 
 
 class HttpServer:
-    def __init__(self, host="0.0.0.0", port=HTTP_SERVER_PORT, web_root="public"):
+    def __init__(
+        self,
+        control_surface: ControlSurface.ControlSurface,
+        websocket_port: int,
+        host: str = "0.0.0.0",
+        port: int = HTTP_SERVER_PORT,
+        web_root: str = "public",
+    ):
+        self.control_surface = control_surface
         self.host = host
         self.port = port
+        self.websocket_port = websocket_port
         self.web_root = web_root
         self.server_ip = socket.gethostbyname(socket.gethostname())
         self.server_thread = threading.Thread(target=self.run_server)
@@ -30,6 +41,7 @@ class HttpServer:
 
     def run_server(self):
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.server_socket.bind((self.host, self.port))
         self.server_socket.listen(1)
 
@@ -82,7 +94,7 @@ class HttpServer:
                             "{{SERVER_IP}}", self.server_ip
                         )
                         file_content = file_content.replace(
-                            "{{SERVER_PORT}}", str(WEBSOCKET_PORT)
+                            "{{SERVER_PORT}}", str(self.websocket_port)
                         )
                         file_content = file_content.encode("utf-8")
                     else:
@@ -95,20 +107,17 @@ class HttpServer:
                     response_header += f"Content-Length: {len(file_content)}\r\n"
                     response_header += "Connection: closed\r\n\r\n"
 
-                    # Ensure everything is bytes before concatenation
-                    client_socket.sendall(
-                        response_header.encode("utf-8") + file_content
-                    )
+                    if client_socket is not None:
+                        # Ensure everything is bytes before concatenation
+                        client_socket.sendall(
+                            response_header.encode("utf-8") + file_content
+                        )
 
             except FileNotFoundError:
                 not_found_response = (
                     b"HTTP/1.1 404 NOT FOUND\r\n\r\n<h1>404 Not Found</h1>"
                 )
                 client_socket.sendall(not_found_response)
-            finally:
-                client_socket.close()
-
-        self.server_socket.close()
 
     def parse_request(self, request_line):
         try:
@@ -121,5 +130,5 @@ class HttpServer:
         self.running = False
         if self.server_socket:
             self.server_socket.close()
-        if self.server_thread:
+            self.server_socket = None
             self.server_thread.join()

@@ -12,9 +12,11 @@
       );
 
       socket.addEventListener("message", async (message) => {
-        const { address, prop, value }: IncomingMessage = JSON.parse(
+        const { status, address, prop, value }: IncomingMessage = JSON.parse(
           message.data
         );
+
+        if (status !== 200) return;
 
         state.update(
           (state): State => ({
