@@ -32,28 +32,32 @@ class WebsocketServer(threading.Thread):
         self.on_connect = on_connect
         self.on_message = on_message
         self.on_disconnect = on_disconnect
-        self._is_running = True
         self._client_code_counter = 0
+        self._is_running = False
+
+    def start(self):
+        self.running = True
+        super().start()
 
     def run(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)  # Allow reuse
 
         try:
             self.sock.bind(("0.0.0.0", self.port))
             self.sock.listen(1)
+            self._is_running = True
 
-            while True:
+            while self._is_running:
                 conn, addr = self.sock.accept()
-
                 if conn and conn.fileno() != -1:
                     self.client_thread = threading.Thread(
                         target=self.handle_client, args=(conn, addr)
                     )
                     self.client_thread.start()
+
         except Exception as e:
-            self.control_surface.log_message(f"Websocket Server Error: {e}")
-            self.run()
+            self.control_surface.log_message(f"WebSocket Server Error: {e}")
 
     def handle_client(self, conn: socket.socket, addr):
         data = conn.recv(1024)
@@ -182,8 +186,8 @@ class WebsocketServer(threading.Thread):
                 conn.sendall(
                     self.create_websocket_header(json.dumps(payload).encode("utf-8"))
                 )
-            except BrokenPipeError:
-                self.control_surface.log_message("BrokenPipeError")
+            except BrokenPipeError as e:
+                self.control_surface.log_message(f"BrokenPipeError: {e}")
 
     def create_websocket_header(self, payload):
         header = bytearray()
@@ -207,7 +211,7 @@ class WebsocketServer(threading.Thread):
     def stop(self):
         self._is_running = False
 
-        for client_id in list(self.clients.keys()):  # Use a list to avoid RuntimeError
+        for client_id in list(self.clients.keys()):
             self.clients[client_id].close()
 
         if self.sock:
