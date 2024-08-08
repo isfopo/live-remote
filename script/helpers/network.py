@@ -6,7 +6,7 @@ def get_ip():
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.settimeout(0)
-    except:
+    except Exception:
         get_ip()
     try:
         # doesn't even have to be reachable
