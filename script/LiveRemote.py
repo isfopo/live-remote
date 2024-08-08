@@ -33,7 +33,9 @@ class LiveRemote(ControlSurface):
         self.websocket_server.start()
 
     def _start_http_server(self):
-        self.http_server = HttpServer(self, self.websocket_server.port)
+        self.http_server = HttpServer(
+            control_surface=self, websocket_port=self.websocket_server.port
+        )
         self.http_server.start()
 
     def disconnect(self):
