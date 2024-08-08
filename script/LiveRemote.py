@@ -41,6 +41,8 @@ class LiveRemote(ControlSurface):
     def disconnect(self):
         """Clean up on disconnect"""
         ControlSurface.disconnect(self)
-        self.http_server.stop()
-        self.websocket_server.stop()
+        if self.http_server:
+            self.http_server.stop()  # Stop HTTP Server
+        if self.websocket_server:
+            self.websocket_server.stop()  # Stop WebSocket Server
         return None

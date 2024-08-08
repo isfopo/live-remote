@@ -41,23 +41,23 @@ class WebsocketServer(threading.Thread):
 
     def run(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)  # Allow reuse
 
         try:
             self.sock.bind(("0.0.0.0", self.port))
             self.sock.listen(1)
+            self._is_running = True
 
-            while True:
+            while self._is_running:
                 conn, addr = self.sock.accept()
-
                 if conn and conn.fileno() != -1:
                     self.client_thread = threading.Thread(
                         target=self.handle_client, args=(conn, addr)
                     )
                     self.client_thread.start()
+
         except Exception as e:
-            self.control_surface.log_message(f"Websocket Server Error: {e}")
-            self.run()
+            self.control_surface.log_message(f"WebSocket Server Error: {e}")
 
     def handle_client(self, conn: socket.socket, addr):
         data = conn.recv(1024)
