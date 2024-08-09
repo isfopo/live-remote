@@ -14,11 +14,11 @@
     <Connect />
   {/if}
 </main>
-<footer>
+<div class="sidebar">
   <ThemeToggle />
   <EditButton />
   <AddButton />
-</footer>
+</div>
 
 <style>
   main {
@@ -29,16 +29,17 @@
     padding: 0;
     margin: 0;
   }
-  footer {
+  .sidebar {
     position: fixed;
     bottom: 0;
-    left: 0;
+    top: 0;
     right: 0;
     display: flex;
+    flex-direction: column;
     justify-content: space-around;
     align-items: center;
     background-color: var(--theme-primaryContainer);
-    padding: 1rem;
+    padding: 1.5rem;
   }
 
   @media (min-width: 640px) {
