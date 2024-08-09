@@ -5,7 +5,7 @@
 
   export let title: string;
   export let icon: IconType;
-  export let size: number = 48;
+  export let size: number = 24;
   export let color: ThemeColors = "onPrimaryContainer";
   export let onClick: () => void;
 
