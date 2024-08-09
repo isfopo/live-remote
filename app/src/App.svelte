@@ -8,17 +8,17 @@
 </script>
 
 <main>
-  <header>
-    <ThemeToggle />
-    <EditButton />
-    <AddButton />
-  </header>
   {#if $state.socket && $state.socket.readyState === WebSocket.OPEN}
     <Remote />
   {:else}
     <Connect />
   {/if}
 </main>
+<footer>
+  <ThemeToggle />
+  <EditButton />
+  <AddButton />
+</footer>
 
 <style>
   main {
@@ -28,6 +28,17 @@
     height: 100%;
     padding: 0;
     margin: 0;
+  }
+  footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--theme-primaryContainer);
+    padding: 1rem;
   }
 
   @media (min-width: 640px) {

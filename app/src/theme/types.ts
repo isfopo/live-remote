@@ -57,4 +57,6 @@ export type ThemeColors =
   | "surfaceContainerLow"
   | "surfaceContainer"
   | "surfaceContainerHigh"
-  | "surfaceContainerHighest";
+  | "surfaceContainerHighest"
+  | "play"
+  | "record";
