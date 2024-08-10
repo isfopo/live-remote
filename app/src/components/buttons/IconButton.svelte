@@ -65,7 +65,6 @@
     padding: 0;
     margin: 0;
     cursor: pointer;
-    transition: transform 0.1s ease-in-out;
   }
 
   button:hover,
@@ -78,7 +77,7 @@
 
   .tooltip {
     position: absolute;
-    background-color: var(--theme-surface);
+    background-color: var(--theme-surfaceBright);
     color: var(--theme-onSurface);
     border-radius: 4px;
     padding: 0.5rem 1rem;
