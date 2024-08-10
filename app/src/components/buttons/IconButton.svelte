@@ -89,24 +89,24 @@
   .top {
     bottom: 100%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -1rem);
   }
 
   .right {
     left: 100%;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translate(1rem, -50%);
   }
 
   .left {
     right: 100%;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translate(-1rem, -50%);
   }
 
   .bottom {
     top: 100%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, 1rem);
   }
 </style>
