@@ -20,7 +20,7 @@
 >
   {#each $state.grid.items as { id, x, y, w, h }}
     <GridItem {id} {x} {y} {w} {h} resizable={false}>
-      <svelte:component this={widgets[id].component} />
+      <svelte:component this={widgets[id]?.component} />
     </GridItem>
   {/each}
 </Grid>
