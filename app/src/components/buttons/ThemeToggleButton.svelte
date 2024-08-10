@@ -11,4 +11,5 @@
   title={$state.theme.current === "dark"
     ? "Switch to light mode"
     : "Switch to dark mode"}
+  showTooltipOnHover
 />
