@@ -11,4 +11,9 @@
   };
 </script>
 
-<IconButton icon={FaSolidPlus} onClick={openAddMenu} title="Add" />
+<IconButton
+  icon={FaSolidPlus}
+  onClick={openAddMenu}
+  title="Add"
+  showTooltipOnHover
+/>

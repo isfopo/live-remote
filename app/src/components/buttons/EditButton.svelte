@@ -16,4 +16,9 @@
   };
 </script>
 
-<IconButton icon={FaSolidPen} onClick={toggle} title="Edit" />
+<IconButton
+  icon={FaSolidPen}
+  onClick={toggle}
+  title="Edit"
+  showTooltipOnHover
+/>

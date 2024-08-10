@@ -8,6 +8,8 @@
   export let size: number = 24;
   export let color: ThemeColors = "onPrimaryContainer";
   export let onClick: () => void;
+  export let showTooltipOnHover: boolean = false;
+  export let direction: "left" | "right" | "top" | "bottom" = "left";
 
   let showTooltip = false;
   let _color: string = $state.theme.get(color);
@@ -17,7 +19,9 @@
   }
 
   const handleMouseEnter = () => {
-    showTooltip = true;
+    if (showTooltipOnHover) {
+      showTooltip = true;
+    }
   };
 
   const handleMouseLeave = () => {
@@ -44,7 +48,7 @@
   </button>
 
   {#if showTooltip}
-    <div role="tooltip" class="tooltip">
+    <div role="tooltip" class={`tooltip ${direction}`}>
       {title}
     </div>
   {/if}
@@ -73,14 +77,35 @@
 
   .tooltip {
     position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
     background-color: var(--theme-surface);
     color: var(--theme-onSurface);
     border-radius: 4px;
-    padding: 5px;
+    padding: 0.5rem 1rem;
     white-space: nowrap;
     z-index: 10;
+  }
+
+  .top {
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .right {
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .left {
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .bottom {
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
   }
 </style>
