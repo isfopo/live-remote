@@ -65,6 +65,7 @@
     padding: 0;
     margin: 0;
     cursor: pointer;
+    transition: transform 0.1s ease-in-out;
   }
 
   button:hover,
