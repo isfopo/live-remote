@@ -7,21 +7,24 @@
   export let id: WidgetId;
 </script>
 
-<span class={`remove-button ${$state.grid.editing ? "show" : ""}`}>
+<button 
+  class={`remove-button ${$state.grid.editing ? "show" : ""}`} 
+  on:click={() => $state.grid.remove(id)} 
+  tabindex="0" 
+  aria-pressed="false">
   <IconButton
     icon={FaSolidX}
-    onClick={() => $state.grid.remove(id)}
     color="inverseOnSurface"
     title="Remove"
-    size={24}
+    size={12}
   />
-</span>
+</button>
 
 <style>
   .remove-button {
     position: absolute;
-    top: -1.5rem;
-    right: -1.5rem;
+    top: -1rem;
+    right: -1rem;
     padding: 0.5rem;
     opacity: 0;
     transition: transform 0.2s opacity 0.2s;
@@ -37,5 +40,10 @@
 
   .remove-button:hover {
     transform: scale(1.1);
+  }
+
+  .remove-button:active {
+    transform: scale(0.9);
+    background-color: var(--theme-onSurfaceVariant);
   }
 </style>
