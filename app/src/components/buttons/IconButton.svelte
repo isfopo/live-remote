@@ -7,7 +7,7 @@
   export let icon: IconType;
   export let size: number = 24;
   export let color: ThemeColors = "onPrimaryContainer";
-  export let onClick: () => void;
+  export let onClick: () => void = () => {};
   export let showTooltipOnHover: boolean = false;
   export let direction: "left" | "right" | "top" | "bottom" = "left";
 

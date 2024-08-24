@@ -7,11 +7,12 @@
   export let id: WidgetId;
 </script>
 
-<button 
-  class={`remove-button ${$state.grid.editing ? "show" : ""}`} 
-  on:click={() => $state.grid.remove(id)} 
-  tabindex="0" 
-  aria-pressed="false">
+<button
+  class={`remove-button ${$state.grid.editing ? "show" : ""}`}
+  on:click={() => $state.grid.remove(id)}
+  tabindex="0"
+  aria-pressed="false"
+>
   <IconButton
     icon={FaSolidX}
     color="inverseOnSurface"
