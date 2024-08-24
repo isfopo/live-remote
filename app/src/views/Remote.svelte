@@ -1,11 +1,8 @@
 <script lang="ts">
-  import Grid, {
-    GridItem,
-    type LayoutChangeDetail,
-  } from "svelte-grid-extended";
   import { widgets, type WidgetOnGrid } from "../widgets";
   import { state } from "../state";
   import DialogContainer from "../components/dialogs/DialogContainer.svelte";
+  import { Grid, GridItem, type LayoutChangeDetail } from "../components/grid";
 
   const itemSize = { height: 40 };
 

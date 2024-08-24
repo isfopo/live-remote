@@ -1,7 +1,7 @@
 import type { ComponentType } from "svelte";
 import TransportWidget from "../widgets/TransportWidget.svelte";
 import type { Song } from "../types/Live";
-import type { LayoutItem } from "svelte-grid-extended";
+import type { LayoutItem } from "../components/grid";
 
 export type WidgetId = "transport";
 
