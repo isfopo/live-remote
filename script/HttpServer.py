@@ -30,7 +30,7 @@ class CustomHTTPRequestHandler(SimpleHTTPRequestHandler):
 
                 file_content = f.read()
 
-                if "text" in content_type:
+                if self.path == "/index.html":
                     file_content = file_content.decode(
                         "utf-8"
                     )  # Decode it first to work with str
