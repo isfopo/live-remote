@@ -12,9 +12,8 @@ class LiveRemote(ControlSurface):
     def __init__(self, c_instance):
         ControlSurface.__init__(self, c_instance)
         try:
-            with self.component_guard():
-                self._start_websocket_server()
-                self._start_http_server()
+            self._start_websocket_server()
+            self._start_http_server()
 
             self.show_message(f"Live Remote is available at {self.http_server.url}")
 
