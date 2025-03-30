@@ -9,7 +9,7 @@ from .constants import HTTP_SERVER_PORT
 class CustomHTTPRequestHandler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         self.control_surface = kwargs.pop("control_surface", None)
-        self.server_ip = kwargs.pop("server_ip", "127.0.0.1")
+        self.server_ip = kwargs.pop("server_ip", "0.0.0.0")
         self.websocket_port = kwargs.pop("websocket_port", 8081)
         self.web_root = kwargs.pop("web_root", "public")
         super().__init__(*args, **kwargs)
