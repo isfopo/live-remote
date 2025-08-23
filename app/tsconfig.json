@@ -3,9 +3,17 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "sourceMap": false,
+    "skipLibCheck": true,
+    "moduleResolution": "node"
   },
   "extends": "@tsconfig/svelte/tsconfig.json",
 
-  "include": ["src/**/*", "global.d.ts", "main.ts"],
+  "include": [
+    "src/**/*",
+    "src/**/*.svelte",
+    "global.d.ts",
+    "main.ts",
+    "src/svelte.d.ts"
+  ],
   "exclude": ["node_modules/*", "__sapper__/*", "public/*"]
 }
