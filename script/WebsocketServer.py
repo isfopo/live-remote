@@ -60,6 +60,7 @@ class WebsocketServer(threading.Thread):
             self.control_surface.log_message(f"WebSocket Server Error: {e}")
 
     def handle_client(self, conn: socket.socket, addr):
+        masking_key = b'';
         data = conn.recv(1024)
         headers = self.parse_headers(data)
 
